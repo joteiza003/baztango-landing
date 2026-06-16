@@ -270,8 +270,11 @@ body.pack-modal-open{overflow:hidden}
    RESPONSIVE
    ========================================================================== */
 @media(max-width:860px){
-  .nav,.header-in > .cta-pill{display:none}
+  /* En móvil el header deja solo marca + hamburguesa. El botón Inicio y el
+     selector de idioma viven dentro del menú hamburguesa (no caben inline). */
+  .nav,.header-in > .cta-pill,.home-btn,.header-in > .lang-switch{display:none}
   .burger{display:grid;place-items:center}
+  .mode-presentation .dots{display:none}  /* los puntitos se solapaban con el texto */
   .packs{grid-template-columns:1fr 1fr}
   .pack.feat{grid-column:span 2;justify-content:flex-start}
   .footer-grid{grid-template-columns:1fr}
