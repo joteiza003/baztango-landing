@@ -9,7 +9,7 @@
 //    prefetch anticipado de los tramos vecinos (arranque sin stutter).
 //  - Fallback apilado (scroll normal) en móvil / prefers-reduced-motion.
 // ============================================================================
-import { media, tuning, sections } from "./config.js?v=7";
+import { media, tuning, sections } from "./config.js?v=8";
 import { LANGS, LANG_LABEL, T, getPackDetails, getProgram, getExtras } from "./i18n.js?v=1";
 
 /* ---------- utilidades ---------- */
@@ -154,6 +154,33 @@ function createFrameCache(max = 200, decodeMax = 4) {
     setKeep: (i) => { keepIdx = i; },
     setOnArrive: (fn) => { onArrive = fn; }
   };
+}
+
+/* Descarga (CALIENTA la caché HTTP del navegador) un rango de frames SIN
+   mantenerlos decodificados en memoria: las imágenes se sueltan tras cargar, así
+   no inflan la RAM, pero los bytes quedan en disco. El prefetch posterior los lee
+   en local (rápido) y la reproducción deja de atascarse por la red. */
+function warmFrames(from, to, concurrency = 6, onProgress = null) {
+  from = clampIdx(from); to = clampIdx(to);
+  const total = Math.max(0, to - from + 1);
+  return new Promise((resolve) => {
+    if (total === 0) { resolve(); return; }
+    let next = from, done = 0, active = 0;
+    const pump = () => {
+      while (active < concurrency && next <= to) {
+        const im = new Image();
+        im.decoding = "async";
+        im.onload = im.onerror = () => {
+          active -= 1; done += 1;
+          if (onProgress) onProgress(done, total);
+          if (done >= total) resolve(); else pump();
+        };
+        im.src = framePath(next);
+        next += 1; active += 1;
+      }
+    };
+    pump();
+  });
 }
 
 /* ============================================================================
@@ -472,20 +499,34 @@ function initPresentation() {
 
   /* --- arranque --- */
   async function start() {
-    // PRIMERO los frames clave (para revelar cuanto antes), LUEGO el prefetch.
+    // 1) Frames CLAVE primero: dibujamos la primera sección cuanto antes.
     const list = [...new Set(idx)];
-    let done = 0;
-    await Promise.all(list.map((i) => cache.load(i).then(() => {
-      done += 1;
-      if (loaderBar) loaderBar.style.width = Math.round((done / list.length) * 100) + "%";
-    })));
+    await Promise.all(list.map((i) => cache.load(i)));
+    resize();
+    drawIndex(idx[0], true);
+    setIdle(0);
+    fitCaptions();
+
+    // 2) PRECARGA antes de revelar: descargamos una buena parte de la animación
+    //    (por defecto la mitad) para que en producción la red no atasque las
+    //    transiciones. La barra del loader refleja esta descarga.
+    const frac = clamp(tuning.preloadFraction != null ? tuning.preloadFraction : 0.5, 0, 1);
+    const conc = tuning.preloadConcurrency || 6;
+    const preloadTo = Math.round((media.frameCount - 1) * frac);
+    await warmFrames(0, preloadTo, conc, (d, t) => {
+      if (loaderBar) loaderBar.style.width = Math.round((d / t) * 100) + "%";
+    });
+
+    // 3) Revelamos y seguimos calentando el RESTO de frames en segundo plano,
+    //    de modo que cuando el visitante llegue allí ya estén en local.
     resize();
     drawIndex(idx[0], true);
     setIdle(0);
     fitCaptions();
     reveal();
-    prefetchToward(idx[0], idx[1], 70);  // primer tramo, ya con la página visible
+    prefetchToward(idx[0], idx[1], 70);  // primer tramo decodificado, ya visible
     idlePrefetch();
+    if (preloadTo < media.frameCount - 1) warmFrames(preloadTo + 1, media.frameCount - 1, conc);
   }
 
   window.addEventListener("resize", resize, { passive: true });

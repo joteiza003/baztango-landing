@@ -37,7 +37,9 @@ export const tuning = {
   maxDpr: 2,           // tope de devicePixelRatio para el canvas
   cacheMax: 120,       // frames decodificados máx. en memoria (LRU) — a 1920×1080 ≈ 1 GB
   cacheDecodeMax: 4,   // decodificaciones simultáneas
-  prefetchBurst: 40    // frames a precargar por delante durante la transición
+  prefetchBurst: 40,   // frames a precargar por delante durante la transición
+  preloadFraction: 0.5,// fracción de la animación a DESCARGAR antes de revelar (loader) — sube a 0.7/1 si la red es lenta
+  preloadConcurrency: 6// descargas en paralelo durante la precarga del loader
 };
 
 export const sections = [
