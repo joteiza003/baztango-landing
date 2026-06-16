@@ -313,23 +313,91 @@ function initPresentation() {
   }
 
   /* --- transición temporizada --- */
+  let animRafId = 0;
+  let animWatchdog = 0;
+  let captionFrom = 0;
+
+  function sectionFromFrame(frameIdx) {
+    let best = 0;
+    let bestDist = Infinity;
+    for (let i = 0; i < idx.length; i += 1) {
+      const dist = Math.abs(idx[i] - frameIdx);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = i;
+      }
+    }
+    return best;
+  }
+
   function durationMs(from, to) {
     const distSrc = Math.abs(sections[to].key - sections[from].key);
     return clamp(distSrc / tuning.transRate, tuning.transMin, tuning.transMax) * 1000;
   }
+
+  function durationMsFromFrames(fromFrameIdx, toSection) {
+    const fromKey = fromFrameIdx * media.frameStep;
+    const toKey = sections[toSection].key;
+    const distSrc = Math.abs(toKey - fromKey);
+    return clamp(distSrc / tuning.transRate, tuning.transMin, tuning.transMax) * 1000;
+  }
+
+  function releaseNavLocks() {
+    animating = false;
+    wheelLock = false;
+    if (animRafId) {
+      cancelAnimationFrame(animRafId);
+      animRafId = 0;
+    }
+    if (animWatchdog) {
+      clearTimeout(animWatchdog);
+      animWatchdog = 0;
+    }
+  }
+
+  function finishTransition(target, fromSection) {
+    current = target;
+    curRound = idx[target];
+    captionFrom = target;
+    cache.setKeep(curRound);
+    releaseNavLocks();
+    drawIndex(curRound, true);
+    setIdle(target);
+    idlePrefetch();
+  }
+
   function goTo(target) {
     target = Math.max(0, Math.min(sections.length - 1, target));
-    if (animating || target === current) return;
-    animating = true;
-    const from = current;
-    const a = idx[from], b = idx[target];
+    if (!animating && target === current) return;
+
+    const wasAnimating = animating;
+    if (wasAnimating) {
+      if (animRafId) cancelAnimationFrame(animRafId);
+      animRafId = 0;
+      if (animWatchdog) {
+        clearTimeout(animWatchdog);
+        animWatchdog = 0;
+      }
+    }
+
+    const fromSection = wasAnimating ? sectionFromFrame(curRound) : current;
+    const a = wasAnimating ? curRound : idx[fromSection];
+    const b = idx[target];
     const dir = b >= a ? 1 : -1;
-    const D = durationMs(from, target);
+    const D = wasAnimating ? durationMsFromFrames(a, target) : durationMs(fromSection, target);
     const t0 = performance.now();
+
+    animating = true;
+    captionFrom = fromSection;
     prefetchToward(a, b, Math.min(Math.abs(b - a), 70));
     setIndicators(target);
 
+    animWatchdog = setTimeout(() => {
+      if (animating) finishTransition(target, fromSection);
+    }, D + 900);
+
     function step(now) {
+      if (!animating) return;
       const t = clamp((now - t0) / D);
       const e = easeInOutSine(t);
       curRound = clampIdx(Math.round(lerp(a, b, e)));
@@ -339,14 +407,28 @@ function initPresentation() {
       drawIndex(curRound, true);
 
       // crossfade de texto: sale en la 1ª mitad, entra en la 2ª (el vídeo respira)
-      showCaption(from, 1 - smoothstep(t / 0.42));
+      showCaption(captionFrom, 1 - smoothstep(t / 0.42));
       showCaption(target, smoothstep((t - 0.5) / 0.5));
-      if (progressEl) progressEl.style.width = ((from + (target - from) * e) / (sections.length - 1) * 100) + "%";
+      if (progressEl) progressEl.style.width = ((fromSection + (target - fromSection) * e) / (sections.length - 1) * 100) + "%";
 
-      if (t < 1) requestAnimationFrame(step);
-      else { current = target; animating = false; setIdle(target); idlePrefetch(); }
+      if (t < 1) {
+        animRafId = requestAnimationFrame(step);
+      } else {
+        finishTransition(target, fromSection);
+      }
     }
-    requestAnimationFrame(step);
+    animRafId = requestAnimationFrame(step);
+  }
+
+  function recoverPresentationState() {
+    resize();
+    if (!animating) {
+      wheelLock = false;
+      drawIndex(curRound, true);
+      setIdle(current);
+      return;
+    }
+    drawIndex(curRound, true);
   }
   const next = () => goTo(current + 1);
   const prev = () => goTo(current - 1);
@@ -369,7 +451,6 @@ function initPresentation() {
   /* --- entrada: teclado --- */
   window.addEventListener("keydown", (e) => {
     if (document.body.classList.contains("pack-modal-open")) return;
-    if (animating) return;
     if (["ArrowDown", "PageDown", " ", "Spacebar"].includes(e.key)) { e.preventDefault(); next(); }
     else if (["ArrowUp", "PageUp"].includes(e.key)) { e.preventDefault(); prev(); }
     else if (e.key === "Home") { e.preventDefault(); goTo(0); }
@@ -380,7 +461,7 @@ function initPresentation() {
   let touchY = null;
   window.addEventListener("touchstart", (e) => { touchY = e.touches[0].clientY; }, { passive: true });
   window.addEventListener("touchend", (e) => {
-    if (touchY == null || animating) return;
+    if (touchY == null) return;
     const dy = touchY - e.changedTouches[0].clientY;
     if (Math.abs(dy) > 42) { if (dy > 0) next(); else prev(); }
     touchY = null;
@@ -408,6 +489,16 @@ function initPresentation() {
   }
 
   window.addEventListener("resize", resize, { passive: true });
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") recoverPresentationState();
+  });
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) {
+      releaseNavLocks();
+      recoverPresentationState();
+    }
+  });
+  window.addEventListener("focus", recoverPresentationState);
   bindMenu();
   bindAnchors(goToId);
   start();
