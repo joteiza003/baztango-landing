@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,800;1,6..96,400;1,6..96,600&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/styles.css?v=11" />
+<link rel="stylesheet" href="assets/css/styles.css?v=12" />
 </head>
 <body class="loading">
 
@@ -40,7 +40,7 @@
       <a data-nav="reservas" href="#reservas">Reservas</a>
     </nav>
     <span class="cta-pill is-disabled" aria-disabled="true" title="Apertura de reservas próximamente">Reservas · Próximamente</span>
-    <div class="lang-switch" role="group" aria-label="Idioma">
+    <div class="lang-switch" id="headerLang" role="group" aria-label="Idioma">
       <button type="button" data-lang="es">ES</button>
       <button type="button" data-lang="eu">EU</button>
       <button type="button" data-lang="en">EN</button>
@@ -50,6 +50,15 @@
     <button class="burger" id="burger" aria-label="Abrir menú">☰</button>
   </div>
 </header>
+
+<!-- Selector de idioma de la PORTADA: centrado bajo la cabecera, visible en la intro -->
+<div class="lang-portada lang-switch" id="langPortada" role="group" aria-label="Idioma">
+  <button type="button" data-lang="es">ES</button>
+  <button type="button" data-lang="eu">EU</button>
+  <button type="button" data-lang="en">EN</button>
+  <button type="button" data-lang="fr">FR</button>
+  <button type="button" data-lang="de">DE</button>
+</div>
 
 <!-- ===================== MENÚ MÓVIL ===================== -->
 <div class="mobile-menu" id="mobileMenu">
@@ -275,6 +284,6 @@
   </div>
 </footer>
 
-<script type="module" src="assets/js/cinematic.js?v=17"></script>
+<script type="module" src="assets/js/cinematic.js?v=18"></script>
 </body>
 </html>

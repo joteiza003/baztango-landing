@@ -38,6 +38,8 @@ const cinematicEl = document.getElementById("cinematic");
 const canvas = document.getElementById("frame");
 const scrollCue = document.querySelector(".scroll-cue");
 const dotsWrap = document.getElementById("dots");
+const langPortada = document.getElementById("langPortada");
+const headerLang = document.getElementById("headerLang");
 const capEls = sections.map((s) => document.querySelector(`[data-cap="${s.id}"]`));
 const navLinks = [...document.querySelectorAll("[data-nav]")];
 
@@ -306,6 +308,11 @@ function initPresentation() {
     dotEls.forEach((d, k) => d.classList.toggle("active", k === i));
     if (progressEl) progressEl.style.width = (sections.length > 1 ? (i / (sections.length - 1)) * 100 : 0) + "%";
     if (scrollCue) scrollCue.style.opacity = i === 0 ? "1" : "0";
+    // Idiomas en la portada: visibles en la intro; el selector del header (escritorio)
+    // se oculta en la intro para no duplicar y reaparece en el resto de secciones.
+    const onIntro = i === 0;
+    if (langPortada) { langPortada.style.opacity = onIntro ? "1" : "0"; langPortada.style.pointerEvents = onIntro ? "auto" : "none"; }
+    if (headerLang) { headerLang.style.opacity = onIntro ? "0" : "1"; headerLang.style.pointerEvents = onIntro ? "none" : "auto"; }
   }
   function setIdle(i) {
     capEls.forEach((el, k) => showCaption(k, k === i ? 1 : 0));
