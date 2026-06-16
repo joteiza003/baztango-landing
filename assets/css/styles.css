@@ -41,7 +41,7 @@ img{display:block;max-width:100%}
 .header-in{width:min(var(--maxw),calc(100% - 3rem));margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 0}
 .brand{display:flex;align-items:center;gap:.7rem}
 .brand .mk{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);background:rgba(246,198,111,.06);font-family:var(--serif);font-weight:700;color:var(--gold)}
-.brand b{font-family:var(--serif);font-weight:600;font-size:1.02rem}
+.brand b{font-family:var(--serif);font-weight:600;font-size:1.02rem;white-space:nowrap}
 .brand small{display:block;color:var(--faint);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase}
 .nav{display:flex;gap:.2rem;align-items:center}
 .nav a{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.5rem .7rem;border-radius:999px;transition:color .25s,background .25s}
@@ -173,7 +173,7 @@ h1 em,h2 em{font-style:italic;color:var(--gold)}
 .pack .pp{font-family:var(--serif);color:var(--gold);font-size:1.18rem}
 .pack .pn{font-size:.82rem;color:var(--ink);font-weight:600;margin-top:.1rem}
 .pack.feat{grid-column:span 3;display:flex;align-items:baseline;gap:1rem;justify-content:center}
-.pack.feat .pp{font-size:1.5rem}
+.pack.feat .pp{font-size:1.5rem;white-space:nowrap}
 
 /* tarjetas de pack clicables + modal de detalle */
 .pack{position:relative;cursor:pointer}
@@ -281,7 +281,8 @@ body.pack-modal-open{overflow:hidden}
 }
 @media(max-width:520px){
   .packs{grid-template-columns:1fr}
-  .pack.feat{grid-column:span 1}
+  /* el pack destacado se apila (precio arriba, nombre debajo) como las demás */
+  .pack.feat{grid-column:span 1;flex-direction:column;align-items:center;text-align:center;gap:.2rem}
   .prog-row{grid-template-columns:104px 1fr}
   .hero-meta{gap:1.4rem}
 }
