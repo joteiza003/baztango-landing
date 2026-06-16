@@ -9,7 +9,7 @@
 //    prefetch anticipado de los tramos vecinos (arranque sin stutter).
 //  - Fallback apilado (scroll normal) en móvil / prefers-reduced-motion.
 // ============================================================================
-import { media, tuning, sections } from "./config.js?v=8";
+import { media, tuning, sections, mediaMobile, tuningMobile } from "./config.js?v=9";
 import { LANGS, LANG_LABEL, T, getPackDetails, getProgram, getExtras } from "./i18n.js?v=1";
 
 /* ---------- utilidades ---------- */
@@ -44,7 +44,10 @@ const navLinks = [...document.querySelectorAll("[data-nav]")];
 /* ---------- modo ---------- */
 const mqSmall = window.matchMedia("(max-width: 860px)");
 const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-const stacked = mqSmall.matches || mqReduce.matches;
+// Apilado (scroll normal) SOLO para reduce-motion. El móvil ahora también usa el
+// motor de canvas, con el set de frames ligero (mediaMobile/tuningMobile).
+const stacked = mqReduce.matches;
+const mobileCanvas = mqSmall.matches && !stacked;
 
 /* ---------- chrome común ---------- */
 function setActiveNav(id) {
@@ -686,6 +689,11 @@ function initI18n() {
 }
 
 /* ---------- arranque ---------- */
+// En móvil, fusionamos el set ligero ANTES de crear la caché y arrancar.
+if (mobileCanvas) {
+  Object.assign(media, mediaMobile);
+  Object.assign(tuning, tuningMobile);
+}
 if (stacked) initStacked();
 else initPresentation();
 initPackModal();

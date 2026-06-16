@@ -42,6 +42,27 @@ export const tuning = {
   preloadConcurrency: 6// descargas en paralelo durante la precarga del loader
 };
 
+// ----------------------------------------------------------------------------
+// MÓVIL · mismo motor de canvas pero con secuencia de frames LIGERA (1280×720)
+// y caché/precarga reducidas, para no reventar memoria ni gastar datos. Se
+// fusiona sobre `media`/`tuning` cuando el viewport es pequeño (no reduce-motion).
+// Los frames-m/ se extraen con la MISMA selección que los de escritorio, así las
+// frames clave por sección coinciden.
+// ----------------------------------------------------------------------------
+export const mediaMobile = {
+  framePath: "assets/frames-m/f",
+  frameWidth: 1280,
+  frameHeight: 720
+};
+
+export const tuningMobile = {
+  cacheMax: 40,          // frames decodificados máx. (LRU) — a 1280×720 ≈ 150 MB
+  cacheDecodeMax: 2,     // decodificaciones simultáneas (móvil = CPU limitada)
+  prefetchBurst: 20,     // ventana de prefetch por delante
+  maxDpr: 2,             // tope de DPR del canvas
+  preloadFraction: 0.3   // móvil: precarga menos antes de revelar (datos)
+};
+
 export const sections = [
   { id: "intro",       key: 74,   align: "left"   },
   { id: "concepto",    key: 1068, align: "left"   },
