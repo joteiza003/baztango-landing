@@ -1,0 +1,13 @@
+# Fuentes pesadas: la web NO las sirve (usa la secuencia assets/frames/).
+*.mp4
+*.sfk
+
+# Artefactos / scratch
+terminals/
+agent-tools/
+index-classic-v0.1.html
+
+# Sistema
+.DS_Store
+Thumbs.db
+node_modules/
