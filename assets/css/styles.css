@@ -181,7 +181,8 @@ h1 em,h2 em{font-style:italic;color:var(--gold)}
 .prog-item .t{display:block;font-weight:700;color:var(--gold);font-size:clamp(.92rem,1.15vw,1.05rem);letter-spacing:.03em}
 .prog-item .w{display:block;color:var(--ink);font-size:clamp(1.02rem,1.3vw,1.18rem);margin-top:.18rem;line-height:1.4}
 @media(max-width:560px){
-  [data-cap="programa"] .prog-grid,.prog-grid{grid-template-columns:1fr}
+  /* 2×2 en móvil para que el programa quepa entero sin scroll (cada sección es una pantalla) */
+  [data-cap="programa"] .prog-grid,.prog-grid{grid-template-columns:1fr 1fr;gap:.55rem}
 }
 /* la sección Programa deja ver más el fondo: scrim solo tras el título */
 [data-cap="programa"] .cap-inner::before{background:radial-gradient(90% 42% at 12% 0%,rgba(5,6,10,.52),transparent 68%)}
@@ -300,9 +301,13 @@ body.pack-modal-open{overflow:hidden}
   .footer-grid{grid-template-columns:1fr}
 }
 @media(max-width:520px){
-  .packs{grid-template-columns:1fr}
-  /* el pack destacado se apila (precio arriba, nombre debajo) como las demás */
-  .pack.feat{grid-column:span 1;flex-direction:column;align-items:center;text-align:center;gap:.2rem}
+  /* 3 columnas para que los 9 packs quepan en pantalla sin scroll; el destacado
+     ocupa toda la fila superior */
+  .packs{grid-template-columns:repeat(3,1fr);gap:.5rem}
+  .pack{padding:.6rem .5rem}
+  .pack .pp{font-size:1.05rem}
+  .pack .pn{font-size:.74rem}
+  .pack.feat{grid-column:1/-1;flex-direction:column;align-items:center;text-align:center;gap:.15rem}
   .prog-row{grid-template-columns:104px 1fr}
   .hero-meta{gap:1.4rem}
   .dj-grid{grid-template-columns:repeat(2,1fr);gap:.7rem}
