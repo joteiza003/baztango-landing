@@ -182,17 +182,20 @@ h1 em,h2 em{font-style:italic;color:var(--gold)}
 .prog-item .w{display:block;color:var(--ink);font-size:clamp(1.02rem,1.3vw,1.18rem);margin-top:.18rem;line-height:1.4}
 @media(max-width:560px){
   /* 2×2 en móvil para que el programa quepa entero sin scroll (cada sección es una pantalla) */
-  [data-cap="programa"] .prog-grid,.prog-grid{grid-template-columns:1fr 1fr;gap:.5rem}
-  /* tarjetas compactas: en 2 columnas estrechas el texto envuelve y crecen a lo alto,
-     asi que ajustamos fuentes/paddings para que el bloque quepa sin corte inferior */
+  [data-cap="programa"] .prog-grid,.prog-grid{grid-template-columns:1fr 1fr;gap:.45rem}
+  /* Sube el bloque (padding-top minimo que despeja la cabecera fija ~77px) y compacta
+     las tarjetas: en 2 columnas estrechas el texto envuelve y crecen a lo alto, y el
+     iframe de Wix pierde ~78px por abajo con la barra de URL. .cap[data-cap] gana en
+     especificidad a la regla .cap de @media(max-height:880). */
+  .cap[data-cap="programa"]{padding-top:3.6rem;padding-bottom:.9rem}
   [data-cap="programa"] .cap-inner--wide{padding-top:0}
-  [data-cap="programa"] h2{margin-bottom:.6rem}
-  [data-cap="programa"] .prog-grid{margin-top:.9rem}
-  [data-cap="programa"] .prog-card{padding:.6rem .7rem}
-  [data-cap="programa"] .prog-card h3{font-size:1rem;margin-bottom:.35rem}
-  [data-cap="programa"] .prog-item{padding:.28rem 0}
-  [data-cap="programa"] .prog-item .t{font-size:.8rem}
-  [data-cap="programa"] .prog-item .w{font-size:.86rem;line-height:1.25}
+  [data-cap="programa"] h2{margin-bottom:.5rem}
+  [data-cap="programa"] .prog-grid{margin-top:.7rem}
+  [data-cap="programa"] .prog-card{padding:.5rem .6rem}
+  [data-cap="programa"] .prog-card h3{font-size:.96rem;margin-bottom:.28rem}
+  [data-cap="programa"] .prog-item{padding:.22rem 0}
+  [data-cap="programa"] .prog-item .t{font-size:.77rem}
+  [data-cap="programa"] .prog-item .w{font-size:.83rem;line-height:1.2}
 }
 /* la sección Programa deja ver más el fondo: scrim solo tras el título */
 [data-cap="programa"] .cap-inner::before{background:radial-gradient(90% 42% at 12% 0%,rgba(5,6,10,.52),transparent 68%)}
