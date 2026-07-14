@@ -10,7 +10,7 @@
 //  - Fallback apilado (scroll normal) en móvil / prefers-reduced-motion.
 // ============================================================================
 import { media, tuning, sections, mediaMobile, tuningMobile } from "./config.js?v=9";
-import { LANGS, LANG_LABEL, T, getPackDetails, getProgram, getExtras } from "./i18n.js?v=1";
+import { LANGS, LANG_LABEL, T, getPackDetails, getProgram, getExtras } from "./i18n.js?v=2";
 
 /* ---------- utilidades ---------- */
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -628,6 +628,8 @@ function applyLang(lang) {
   [[t.meta1v, t.meta1l], [t.meta2v, t.meta2l], [t.meta3v, t.meta3l]].forEach((m, i) => {
     if (metas[i]) { const b = metas[i].querySelector("b"), s = metas[i].querySelector("span"); if (b) b.textContent = m[0]; if (s) s.textContent = m[1]; }
   });
+  setText(`${cap("intro")} .hero-team .ht-label`, t.eb_djs);
+  setText(`${cap("intro")} .hero-team .ht-list li:last-child span`, t.role_teacher);
 
   // concepto / alojamiento
   setText(`${cap("concepto")} .eyebrow`, t.eb_concepto);
@@ -645,11 +647,11 @@ function applyLang(lang) {
   setText(`${cap("djs")} .eyebrow`, t.eb_djs);
   setHtml(`${cap("djs")} h2`, t.djs_h2);
   setText(`${cap("djs")} .lead`, t.djs_lead);
-  setHtml(`${cap("djs")} .soon`, `<i></i>${esc(t.djs_soon)}`);
   setText(`${cap("clases")} .eyebrow`, t.eb_clases);
   setHtml(`${cap("clases")} h2`, t.clases_h2);
   setText(`${cap("clases")} .lead`, t.clases_lead);
-  setHtml(`${cap("clases")} .soon`, `<i></i>${esc(t.clases_soon)}`);
+  const clf = document.querySelectorAll(`${cap("clases")} .facts .fact span`);
+  [t.clases_a, t.clases_b].forEach((v, i) => { if (clf[i]) clf[i].textContent = v; });
 
   // programa (rejilla)
   setText(`${cap("programa")} .eyebrow`, t.nav_programa);

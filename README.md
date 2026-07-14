@@ -32,4 +32,6 @@ Netlify, Cloudflare Pages) y embeber la URL resultante en la página `/baztango`
 
 ## Estado
 - Reservas: deshabilitado («Próximamente»), pendiente fecha de apertura.
-- DJs y Clases: por anunciar.
+- DJs: Carlos Cabral, Ignacio Cavalieri, Gustavo Dicri y Joseba Pagola.
+- Clases: Bakartxo Arabaolaza — Clase A (viernes) técnica de giro · Clase B (sábado) sacadas, ambos roles.
+- Equipo artístico visible como subtítulo en la portada (4 DJs + profesora).

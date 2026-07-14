@@ -121,11 +121,27 @@ h1 em,h2 em{font-style:italic;color:var(--gold)}
 .hero-meta div b{display:block;font-family:var(--serif);font-size:1.5rem;color:var(--gold);line-height:1}
 .hero-meta div span{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
 
+/* equipo artístico en la portada */
+.hero-team{margin-top:2rem}
+.hero-team .ht-label{display:inline-flex;align-items:center;gap:.7rem;color:var(--gold);font-size:.64rem;font-weight:800;letter-spacing:.24em;text-transform:uppercase}
+.hero-team .ht-label::before{content:"";width:28px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.hero-team .ht-list{list-style:none;margin:.9rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
+.hero-team .ht-list li{display:flex;flex-direction:column;line-height:1.2}
+.hero-team .ht-list li b{font-family:var(--serif);color:var(--ink);font-size:1rem;font-weight:600}
+.hero-team .ht-list li span{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:.15rem}
+
 /* listas numeradas */
 .facts{display:grid;gap:.7rem;margin-top:1.7rem}
 .fact{display:flex;gap:1rem;align-items:flex-start}
 .fact b{font-family:var(--serif);color:var(--gold);font-size:1.1rem;line-height:1.3;min-width:1.6rem}
 .fact span{color:var(--muted);font-size:.94rem}
+
+/* DJs con foto */
+[data-cap="djs"] .cap-inner{max-width:760px}
+.dj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;margin-top:1.7rem}
+.dj-card{margin:0}
+.dj-card img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:center 22%;border-radius:12px;border:1px solid var(--line);background:var(--bg)}
+.dj-card figcaption{margin-top:.55rem;font-family:var(--serif);color:var(--ink);font-size:.9rem;text-align:center;line-height:1.25}
 
 /* programa · rejilla de 4 días a ancho completo */
 .cap-inner--wide{max-width:min(1120px,94vw)}
@@ -289,6 +305,7 @@ body.pack-modal-open{overflow:hidden}
   .pack.feat{grid-column:span 1;flex-direction:column;align-items:center;text-align:center;gap:.2rem}
   .prog-row{grid-template-columns:104px 1fr}
   .hero-meta{gap:1.4rem}
+  .dj-grid{grid-template-columns:repeat(2,1fr);gap:.7rem}
 }
 /* viewports bajos: compacta secciones densas (Programa) para que no se recorten */
 @media(max-height:880px){
@@ -305,12 +322,30 @@ body.pack-modal-open{overflow:hidden}
   .prog-item .w{font-size:clamp(.96rem,1.15vw,1.08rem)}
   .facts{gap:.5rem;margin-top:1.2rem}
   .packs{margin-top:1.2rem}
+  .dj-grid{gap:.6rem;margin-top:1.1rem}
+  .dj-card figcaption{margin-top:.4rem;font-size:.82rem}
 }
 @media(max-height:680px){
   .prog-card{padding:.65rem .7rem}
   .prog-item{padding:.24rem 0}
   h2{font-size:clamp(1.5rem,3.6vw,2.3rem);margin-bottom:.7rem}
   .eyebrow{margin-bottom:.7rem}
+}
+/* viewports muy bajos (móvil en horizontal): recupera espacio útil para que las
+   secciones densas no se recorten en modo presentación */
+@media(max-height:520px){
+  .cap{padding-top:3.6rem;padding-bottom:1.3rem}
+  h1{font-size:clamp(2rem,7vw,3.2rem)}
+  h2{font-size:clamp(1.45rem,5vw,2.1rem);margin-bottom:.55rem}
+  .lead{font-size:.9rem}
+  .eyebrow{margin-bottom:.5rem}
+  .cta-row{margin-top:1rem}
+  .hero-team{margin-top:1rem}
+  .hero-team .ht-list{gap:.3rem 1.1rem;margin-top:.5rem}
+  .hero-meta{margin-top:1rem;gap:1.1rem}
+  .dj-grid{margin-top:.8rem;gap:.5rem}
+  .dj-card figcaption{margin-top:.35rem;font-size:.78rem}
+  .prog-grid{gap:.5rem;margin-top:.8rem}
 }
 
 @media(prefers-reduced-motion:reduce){
