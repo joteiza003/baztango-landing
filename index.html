@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,800;1,6..96,400;1,6..96,600&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/styles.css?v=20" />
+<link rel="stylesheet" href="assets/css/styles.css?v=21" />
 </head>
 <body class="loading">
 
@@ -93,28 +93,36 @@
 
       <!-- 1 · INTRO -->
       <article class="cap" data-cap="intro" data-align="left">
-        <div class="cap-inner">
-          <p class="eyebrow">26 – 29 Noviembre 2026 · Berrioplano</p>
-          <h1>Milongas hasta<br>el <em>amanecer.</em></h1>
-          <p class="lead">Baztango 20 reúne milongas hasta el amanecer, clases, DJs, convivencia y reservas del 26 al 29 de noviembre de 2026 en Berrioplano, Hotel Luze El Toro, cerca de Pamplona.</p>
-          <div class="hero-team">
-            <span class="ht-label">Equipo artístico</span>
-            <ul class="ht-list">
-              <li><b>Carlos Cabral</b><span>DJ</span></li>
-              <li><b>Ignacio Cavalieri</b><span>DJ</span></li>
-              <li><b>Gustavo Dicri</b><span>DJ</span></li>
-              <li><b>Joseba Pagola</b><span>DJ</span></li>
-              <li><b>Bakartxo Arabaolaza</b><span>Profesora</span></li>
-            </ul>
+        <div class="cap-inner hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">26 – 29 Noviembre 2026 · Berrioplano</p>
+            <h1>Milongas hasta<br>el <em>amanecer.</em></h1>
+            <p class="lead">Baztango 20 reúne milongas hasta el amanecer, clases, DJs, convivencia y reservas del 26 al 29 de noviembre de 2026 en Berrioplano, Hotel Luze El Toro, cerca de Pamplona.</p>
+            <div class="hero-team">
+              <span class="ht-label">Equipo artístico</span>
+              <ul class="ht-list">
+                <li><b>Carlos Cabral</b><span>DJ</span></li>
+                <li><b>Ignacio Cavalieri</b><span>DJ</span></li>
+                <li><b>Gustavo Dicri</b><span>DJ</span></li>
+                <li><b>Joseba Pagola</b><span>DJ</span></li>
+                <li><b>Bakartxo Arabaolaza</b><span>Profesora</span></li>
+              </ul>
+            </div>
+            <div class="cta-row">
+              <span class="btn btn-primary is-disabled" aria-disabled="true">Reservas · Próximamente</span>
+              <a class="btn btn-ghost" href="#programa">Ver programa</a>
+              <button type="button" class="btn btn-ghost hero-video-btn" data-video="Ye7BTm0GPLE"><span class="pl-ico" aria-hidden="true"></span>Ver vídeo</button>
+            </div>
+            <div class="hero-meta">
+              <div><b>20ª</b><span>Edición</span></div>
+              <div><b>4</b><span>Días de tango</span></div>
+              <div><b>500 m²</b><span>Pista de madera</span></div>
+            </div>
           </div>
-          <div class="cta-row">
-            <span class="btn btn-primary is-disabled" aria-disabled="true">Reservas · Próximamente</span>
-            <a class="btn btn-ghost" href="#programa">Ver programa</a>
-          </div>
-          <div class="hero-meta">
-            <div><b>20ª</b><span>Edición</span></div>
-            <div><b>4</b><span>Días de tango</span></div>
-            <div><b>500 m²</b><span>Pista de madera</span></div>
+          <div class="hero-video" role="button" tabindex="0" data-video="Ye7BTm0GPLE" aria-label="Reproducir vídeo de Baztango 20">
+            <img class="hv-thumb" src="https://i.ytimg.com/vi/Ye7BTm0GPLE/hqdefault.jpg" alt="" decoding="async">
+            <span class="hv-play" aria-hidden="true"></span>
+            <span class="hv-label">Ver vídeo</span>
           </div>
         </div>
       </article>
@@ -275,6 +283,15 @@
   </div>
 </div>
 
+<!-- ===================== LIGHTBOX VÍDEO ===================== -->
+<div class="video-lightbox" id="videoLightbox" hidden>
+  <div class="vl-backdrop" data-vl-close></div>
+  <div class="vl-panel" role="dialog" aria-modal="true" aria-label="Vídeo de Baztango 20">
+    <button class="vl-close" type="button" data-vl-close aria-label="Cerrar vídeo">✕</button>
+    <div class="vl-embed" id="videoEmbed"></div>
+  </div>
+</div>
+
 <!-- ===================== FOOTER ===================== -->
 <footer class="site-footer">
   <div class="footer-in">
@@ -302,6 +319,6 @@
   </div>
 </footer>
 
-<script type="module" src="assets/js/cinematic.js?v=20"></script>
+<script type="module" src="assets/js/cinematic.js?v=21"></script>
 </body>
 </html>

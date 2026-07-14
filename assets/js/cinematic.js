@@ -597,6 +597,63 @@ function initPackModal() {
 }
 
 /* ============================================================================
+   VÍDEO YouTube · PC: reproductor en línea en el hero · Móvil: lightbox
+   (click-to-play: el iframe se inyecta solo al pulsar, no en la carga)
+   ========================================================================== */
+function initVideo() {
+  const FALLBACK_ID = "Ye7BTm0GPLE";
+  const embedSrc = (id) => `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+  const facade = document.querySelector(".hero-video");
+  const mobileBtn = document.querySelector(".hero-video-btn");
+  const lightbox = document.getElementById("videoLightbox");
+  const embedBox = document.getElementById("videoEmbed");
+
+  function makeIframe(id) {
+    const f = document.createElement("iframe");
+    f.src = embedSrc(id);
+    f.title = "Vídeo de Baztango 20";
+    f.allow = "autoplay; fullscreen; encrypted-media; picture-in-picture";
+    f.setAttribute("allowfullscreen", "");
+    f.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+    return f;
+  }
+
+  // PC: sustituye la miniatura por el iframe (reproducción en línea)
+  if (facade) {
+    const playInline = () => {
+      if (facade.classList.contains("is-playing")) return;
+      const f = makeIframe(facade.getAttribute("data-video") || FALLBACK_ID);
+      f.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0";
+      facade.innerHTML = "";
+      facade.appendChild(f);
+      facade.classList.add("is-playing");
+    };
+    facade.addEventListener("click", playInline);
+    facade.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); playInline(); } });
+  }
+
+  // Móvil (y fallback): lightbox a pantalla completa
+  function openLightbox(id) {
+    if (!lightbox || !embedBox) return;
+    embedBox.innerHTML = "";
+    embedBox.appendChild(makeIframe(id));
+    lightbox.hidden = false;
+    document.body.classList.add("video-lightbox-open");
+  }
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.hidden = true;
+    if (embedBox) embedBox.innerHTML = "";   // detiene la reproducción
+    document.body.classList.remove("video-lightbox-open");
+  }
+  if (mobileBtn) mobileBtn.addEventListener("click", () => openLightbox(mobileBtn.getAttribute("data-video") || FALLBACK_ID));
+  if (lightbox) {
+    lightbox.querySelectorAll("[data-vl-close]").forEach((el) => el.addEventListener("click", closeLightbox));
+    window.addEventListener("keydown", (e) => { if (e.key === "Escape" && !lightbox.hidden) closeLightbox(); });
+  }
+}
+
+/* ============================================================================
    I18N · aplica el idioma por selectores (reconstruye programa/extras/modal)
    ========================================================================== */
 function applyLang(lang) {
@@ -706,4 +763,5 @@ if (mobileCanvas) {
 if (stacked) initStacked();
 else initPresentation();
 initPackModal();
+initVideo();
 initI18n();

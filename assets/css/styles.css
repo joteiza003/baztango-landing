@@ -130,6 +130,35 @@ h1 em,h2 em{font-style:italic;color:var(--gold)}
 .hero-team .ht-list li b{font-family:var(--serif);color:var(--ink);font-size:1rem;font-weight:600}
 .hero-team .ht-list li span{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:.15rem}
 
+/* ---------- reproductor de vídeo en la portada ---------- */
+/* PC: hero a dos columnas (texto + reproductor a la derecha).
+   width explicito: justify-items:start del .cap no estira el grid-item, asi que
+   sin width el flex se colapsa al contenido y el h1 envuelve en exceso. */
+[data-cap="intro"] .cap-inner{width:min(1120px,92vw);max-width:min(1120px,92vw)}
+.hero-inner{display:flex;align-items:center;gap:clamp(2rem,4vw,3.6rem)}
+.hero-copy{flex:1 1 auto;min-width:0}
+.hero-video{flex:0 0 clamp(340px,40%,520px);position:relative;display:block;aspect-ratio:16/9;padding:0;cursor:pointer;border-radius:16px;overflow:hidden;background:#000;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.5);transition:border-color .3s,box-shadow .3s}
+.hero-video:hover{border-color:rgba(246,198,111,.55);box-shadow:0 34px 90px rgba(0,0,0,.6)}
+.hv-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.88;transition:opacity .35s,transform .6s var(--ease)}
+.hero-video:hover .hv-thumb{opacity:1;transform:scale(1.05)}
+.hv-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:66px;height:66px;border-radius:50%;background:rgba(246,198,111,.94);display:grid;place-items:center;box-shadow:0 10px 34px rgba(0,0,0,.55);transition:transform .25s var(--ease),background .25s}
+.hero-video:hover .hv-play{transform:translate(-50%,-50%) scale(1.09);background:var(--gold)}
+.hv-play::before{content:"";width:0;height:0;margin-left:5px;border-style:solid;border-width:11px 0 11px 19px;border-color:transparent transparent transparent #0a0b10}
+.hv-label{position:absolute;left:1rem;bottom:.85rem;z-index:1;font-size:.6rem;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);text-shadow:0 2px 10px rgba(0,0,0,.7)}
+.hero-video::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(5,6,10,.55));pointer-events:none}
+.hero-video-btn{display:none;align-items:center;gap:.55rem}
+.pl-ico{display:inline-block;width:0;height:0;border-style:solid;border-width:5px 0 5px 9px;border-color:transparent transparent transparent currentColor}
+
+/* Lightbox del vídeo (móvil, y fallback) */
+.video-lightbox{position:fixed;inset:0;z-index:130;display:grid;place-items:center;padding:1.1rem}
+.video-lightbox[hidden]{display:none}
+.vl-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.86);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+.vl-panel{position:relative;width:min(1100px,96vw);aspect-ratio:16/9;max-height:82vh;background:#000;border:1px solid rgba(246,198,111,.4);border-radius:14px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.75);animation:packIn .35s var(--ease)}
+.vl-embed{position:absolute;inset:0}
+.vl-embed iframe{width:100%;height:100%;border:0;display:block}
+.vl-close{position:absolute;top:.6rem;right:.6rem;z-index:2;width:2.4rem;height:2.4rem;border-radius:50%;border:1px solid rgba(246,198,111,.5);background:rgba(9,8,11,.85);color:var(--gold);font-size:1.05rem;cursor:pointer;display:grid;place-items:center;transition:background .25s,border-color .25s}
+.vl-close:hover{background:rgba(246,198,111,.16)}
+
 /* listas numeradas */
 .facts{display:grid;gap:.7rem;margin-top:1.7rem}
 .fact{display:flex;gap:1rem;align-items:flex-start}
@@ -312,6 +341,13 @@ body.pack-modal-open{overflow:hidden}
   .packs{grid-template-columns:1fr 1fr}
   .pack.feat{grid-column:span 2;justify-content:flex-start}
   .footer-grid{grid-template-columns:1fr}
+  /* Vídeo: en móvil se oculta el reproductor grande y se usa un botón que abre
+     el lightbox a pantalla completa (el hero no crece ni se desborda). */
+  [data-cap="intro"] .cap-inner{width:auto;max-width:620px}
+  .hero-inner{flex-direction:column;align-items:flex-start;gap:0}
+  .hero-copy{max-width:100%;flex:1 1 auto}
+  .hero-video{display:none}
+  .hero-video-btn{display:inline-flex}
 }
 @media(max-width:520px){
   /* 3 columnas para que los 9 packs quepan en pantalla sin scroll; el destacado
