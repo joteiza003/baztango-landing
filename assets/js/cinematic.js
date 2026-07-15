@@ -9,7 +9,7 @@
 //    prefetch anticipado de los tramos vecinos (arranque sin stutter).
 //  - Fallback apilado (scroll normal) en móvil / prefers-reduced-motion.
 // ============================================================================
-import { media, tuning, sections, mediaMobile, tuningMobile } from "./config.js?v=9";
+import { media, tuning, sections, mediaMobile, tuningMobile } from "./config.js?v=10";
 import { LANGS, LANG_LABEL, T, getPackDetails, getProgram, getExtras } from "./i18n.js?v=3";
 
 /* ---------- utilidades ---------- */
@@ -125,6 +125,7 @@ function createFrameCache(max = 200, decodeMax = 4) {
     if (pending.has(i)) return pending.get(i);
     const img = new Image();
     img.decoding = "async";
+    img.crossOrigin = "anonymous"; // frames desde el CDN (jsDelivr envía CORS *)
     // Pre-DECODIFICA el frame (no solo lo descarga): así dibujarlo durante la
     // reproducción no provoca el "decode-on-draw" que causa tirones.
     const p = queueDecode(async () => {
@@ -165,25 +166,36 @@ function createFrameCache(max = 200, decodeMax = 4) {
    mantenerlos decodificados en memoria: las imágenes se sueltan tras cargar, así
    no inflan la RAM, pero los bytes quedan en disco. El prefetch posterior los lee
    en local (rápido) y la reproducción deja de atascarse por la red. */
-function warmFrames(from, to, concurrency = 6, onProgress = null) {
+function warmFrames(from, to, concurrency = 6, onProgress = null, pauseWhenHidden = false) {
   from = clampIdx(from); to = clampIdx(to);
   const total = Math.max(0, to - from + 1);
   return new Promise((resolve) => {
     if (total === 0) { resolve(); return; }
     let next = from, done = 0, active = 0;
+    const onVisible = () => { if (!document.hidden) pump(); };
+    const finish = () => {
+      if (pauseWhenHidden) document.removeEventListener("visibilitychange", onVisible);
+      resolve();
+    };
     const pump = () => {
-      while (active < concurrency && next <= to) {
+      // Solo el calentamiento POST-revelado se pausa con la pestaña oculta (el
+      // visitante puede estar ya en otra página, p.ej. el wizard); la precarga
+      // inicial del loader NUNCA se pausa o el reveal no llegaría en pestañas
+      // abiertas en segundo plano.
+      while ((!pauseWhenHidden || !document.hidden) && active < concurrency && next <= to) {
         const im = new Image();
         im.decoding = "async";
+        im.crossOrigin = "anonymous";
         im.onload = im.onerror = () => {
           active -= 1; done += 1;
           if (onProgress) onProgress(done, total);
-          if (done >= total) resolve(); else pump();
+          if (done >= total) finish(); else pump();
         };
         im.src = framePath(next);
         next += 1; active += 1;
       }
     };
+    if (pauseWhenHidden) document.addEventListener("visibilitychange", onVisible);
     pump();
   });
 }
@@ -196,6 +208,7 @@ function initStacked() {
   capEls.forEach((el, i) => {
     if (!el) return;
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => { el.style.setProperty("--cap-bg", `url("${img.src}")`); el.classList.add("has-bg"); };
     img.src = framePath(keyToIndex(sections[i].key));
   });
@@ -536,7 +549,12 @@ function initPresentation() {
     reveal();
     prefetchToward(idx[0], idx[1], 70);  // primer tramo decodificado, ya visible
     idlePrefetch();
-    if (preloadTo < media.frameCount - 1) warmFrames(preloadTo + 1, media.frameCount - 1, conc);
+    // Calentamiento de fondo con TOPE (warmMaxFraction): no monopoliza el ancho
+    // de banda del visitante durante minutos; el tramo final lo trae
+    // prefetchBurst bajo demanda según se navega.
+    const warmFrac = clamp(tuning.warmMaxFraction != null ? tuning.warmMaxFraction : 1, frac, 1);
+    const warmTo = Math.round((media.frameCount - 1) * warmFrac);
+    if (preloadTo < warmTo) warmFrames(preloadTo + 1, warmTo, conc, null, true);
   }
 
   window.addEventListener("resize", resize, { passive: true });

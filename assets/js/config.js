@@ -18,8 +18,16 @@
 //   Duración = distanciaDeFrames / transRate (acotada a min/max).
 // ============================================================================
 
+// CDN INMUTABLE para los fotogramas (jsDelivr sobre el tag fijo `frames-v1`).
+// Motivo: GitHub Pages regenera el ETag de TODOS los ficheros en cada deploy,
+// invalidando ~146 MB de caché de los visitantes con cada push. jsDelivr sirve
+// desde el tag de git (caché 7 días + revalidación 304 estable), de modo que
+// los deploys de la landing YA NO tocan los frames. Si algún día se regeneran
+// los fotogramas: crear tag nuevo (frames-v2) y actualizar esta constante.
+const FRAMES_CDN = "https://cdn.jsdelivr.net/gh/joteiza003/baztango-landing@frames-v1/";
+
 export const media = {
-  framePath: "assets/frames/f",
+  framePath: FRAMES_CDN + "assets/frames/f",
   framePad: 4,
   frameExt: ".jpg",
   frameCount: 903,
@@ -38,8 +46,9 @@ export const tuning = {
   cacheMax: 120,       // frames decodificados máx. en memoria (LRU) — a 1920×1080 ≈ 1 GB
   cacheDecodeMax: 4,   // decodificaciones simultáneas
   prefetchBurst: 40,   // frames a precargar por delante durante la transición
-  preloadFraction: 0.5,// fracción de la animación a DESCARGAR antes de revelar (loader) — sube a 0.7/1 si la red es lenta
-  preloadConcurrency: 6// descargas en paralelo durante la precarga del loader
+  preloadFraction: 0.25,// fracción a DESCARGAR antes de revelar (loader) — con el CDN inmutable basta 1/4
+  preloadConcurrency: 6,// descargas en paralelo durante la precarga del loader
+  warmMaxFraction: 0.7 // tope del calentamiento en 2º plano (el resto lo trae prefetchBurst bajo demanda)
 };
 
 // ----------------------------------------------------------------------------
@@ -50,7 +59,7 @@ export const tuning = {
 // frames clave por sección coinciden.
 // ----------------------------------------------------------------------------
 export const mediaMobile = {
-  framePath: "assets/frames-m/f",
+  framePath: FRAMES_CDN + "assets/frames-m/f",
   frameWidth: 1280,
   frameHeight: 720
 };
@@ -60,7 +69,8 @@ export const tuningMobile = {
   cacheDecodeMax: 2,     // decodificaciones simultáneas (móvil = CPU limitada)
   prefetchBurst: 20,     // ventana de prefetch por delante
   maxDpr: 2,             // tope de DPR del canvas
-  preloadFraction: 0.3   // móvil: precarga menos antes de revelar (datos)
+  preloadFraction: 0.2,  // móvil: precarga menos antes de revelar (datos)
+  warmMaxFraction: 0.5   // móvil: el calentamiento de fondo para en la mitad (datos)
 };
 
 export const sections = [
