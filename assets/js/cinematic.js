@@ -572,9 +572,21 @@ function initPresentation() {
   bindAnchors(goToId);
   start();
 
-  // si se cruza el breakpoint hacia móvil, recargar para el layout apilado
+  // si se cruza el breakpoint hacia móvil, recargar para el layout apilado.
+  // EXCEPCIÓN: nunca recargar con el vídeo abierto (girar el móvil al ver el
+  // vídeo cruza el breakpoint y mataba la reproducción); se recarga al cerrarlo.
   const wasSmall = mqSmall.matches;
-  window.addEventListener("resize", () => { if (mqSmall.matches !== wasSmall) location.reload(); }, { passive: true });
+  window.addEventListener("resize", () => {
+    if (mqSmall.matches === wasSmall) return;
+    const videoAbierto =
+      document.body.classList.contains("video-lightbox-open") ||
+      document.querySelector(".hero-video.is-playing");
+    if (videoAbierto) {
+      window.__jbPendingBreakpointReload = true;
+      return;
+    }
+    location.reload();
+  }, { passive: true });
 }
 
 /* ============================================================================
@@ -620,7 +632,22 @@ function initPackModal() {
    ========================================================================== */
 function initVideo() {
   const FALLBACK_ID = "Ye7BTm0GPLE";
-  const embedSrc = (id) => `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+  // autoplay SOLO si el entorno lo permite. Embebida en Wix, la cadena de
+  // iframes solo delega "fullscreen" (sin autoplay): con autoplay=1 el player
+  // móvil se queda en un spinner infinito al tocar play (el play() programático
+  // queda vetado). Sin el parámetro, el toque en el play de YouTube reproduce
+  // por gesto directo, que no necesita permiso de autoplay.
+  const autoplayAllowed = (() => {
+    const framed = (() => { try { return window.top !== window.self; } catch (_e) { return true; } })();
+    if (!framed) return true; // visita directa a la landing
+    try {
+      const fp = document.featurePolicy || document.permissionsPolicy;
+      if (fp && typeof fp.allowsFeature === "function") return fp.allowsFeature("autoplay");
+    } catch (_e) { /* sin API: asumir denegado dentro de iframe */ }
+    return false;
+  })();
+  const embedSrc = (id) =>
+    `https://www.youtube-nocookie.com/embed/${id}?${autoplayAllowed ? "autoplay=1&" : ""}rel=0&modestbranding=1&playsinline=1`;
   const facade = document.querySelector(".hero-video");
   const mobileBtn = document.querySelector(".hero-video-btn");
   const lightbox = document.getElementById("videoLightbox");
@@ -663,6 +690,12 @@ function initVideo() {
     lightbox.hidden = true;
     if (embedBox) embedBox.innerHTML = "";   // detiene la reproducción
     document.body.classList.remove("video-lightbox-open");
+    // Si durante el vídeo se cruzó el breakpoint (p.ej. giro del móvil), la
+    // recarga pendiente se ejecuta ahora que ya no interrumpe nada.
+    if (window.__jbPendingBreakpointReload) {
+      window.__jbPendingBreakpointReload = false;
+      location.reload();
+    }
   }
   if (mobileBtn) mobileBtn.addEventListener("click", () => openLightbox(mobileBtn.getAttribute("data-video") || FALLBACK_ID));
   if (lightbox) {
