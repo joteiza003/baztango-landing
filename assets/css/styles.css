@@ -349,6 +349,33 @@ body.pack-modal-open{overflow:hidden}
   .hero-video{display:none}
   .hero-video-btn{display:inline-flex}
 }
+/* Portada en móvil vertical: anclada justo bajo la cabecera (sin aire flotante
+   arriba, que el centrado vertical dejaba en pantallas altas) y compactada para
+   que quepa ENTERA sin corte inferior también en alturas efectivas bajas
+   (~640-700px con las barras del navegador). */
+@media(max-width:860px) and (orientation:portrait){
+  /* la píldora de idiomas flotante solapaba la fecha; en móvil los idiomas
+     viven en el menú ☰ (donde ya estaban duplicados) */
+  .mode-presentation .lang-portada{display:none}
+  .cap[data-cap="intro"]{align-items:start;padding-top:6.6rem;padding-bottom:1rem}
+  [data-cap="intro"] .eyebrow{margin-bottom:.6rem}
+  [data-cap="intro"] h1{font-size:clamp(2.2rem,8.5vw,3.4rem)}
+  [data-cap="intro"] .lead{font-size:.95rem;line-height:1.5}
+  [data-cap="intro"] .hero-team{margin-top:1.1rem}
+  [data-cap="intro"] .hero-team .ht-list{margin-top:.55rem;gap:.32rem 1.15rem}
+  [data-cap="intro"] .cta-row{margin-top:1.1rem;gap:.55rem}
+  [data-cap="intro"] .btn{padding:.68rem 1.05rem}
+  [data-cap="intro"] .hero-meta{margin-top:1.1rem;gap:1.4rem}
+  [data-cap="intro"] .hero-meta div b{font-size:1.25rem}
+}
+/* móviles especialmente bajos: un punto más de compactación en la portada */
+@media(max-width:860px) and (orientation:portrait) and (max-height:700px){
+  .cap[data-cap="intro"]{padding-top:5.8rem}
+  [data-cap="intro"] .lead{font-size:.9rem}
+  [data-cap="intro"] .hero-team,[data-cap="intro"] .cta-row,[data-cap="intro"] .hero-meta{margin-top:.7rem}
+  [data-cap="intro"] .hero-team .ht-list{gap:.24rem 1rem;margin-top:.35rem}
+  [data-cap="intro"] .btn{padding:.6rem .95rem}
+}
 @media(max-width:520px){
   /* 3 columnas para que los 9 packs quepan en pantalla sin scroll; el destacado
      ocupa toda la fila superior */
