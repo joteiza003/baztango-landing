@@ -120,7 +120,7 @@ export const T = {
   es: {
     htmlLang: "es",
     nav_concepto: "Concepto", nav_hotel: "Hotel", nav_programa: "Programa", nav_djs: "DJs", nav_clases: "Clases", nav_packs: "Packs", nav_extras: "Extras", nav_reservas: "Reservas",
-    home_btn: "↩ Inicio", mm_home: "↩ Volver al inicio", reservas_soon: "Reservas · Próximamente", scroll_cue: "Scroll para avanzar",
+    home_btn: "↩ Inicio", mm_home: "↩ Volver al inicio", reservas_soon: "Reservas · Próximamente", reservas_cta: "Reservar plaza", scroll_cue: "Scroll para avanzar",
     hero_eyebrow: "26 – 29 Noviembre 2026 · Berrioplano",
     hero_h1: "Milongas hasta el <em>amanecer.</em>",
     hero_lead: "Baztango 20 reúne milongas hasta el amanecer, clases, DJs, convivencia y reservas del 26 al 29 de noviembre de 2026 en Berrioplano, Hotel Luze El Toro, cerca de Pamplona.",
@@ -140,7 +140,8 @@ export const T = {
     eb_packs: "Packs y tarifas", packs_h2: "<em>Packs.</em>", packs_lead: "Combinaciones de hotel, milongas, comidas, clases y extras.", pack_feat: "Estado Puro + Hotel · 165 € + 252 € hotel", pack_incl: "Actividades incluidas:",
     eb_extras: "Extras", extras_h2: "Actividades <em>sueltas.</em>",
     eb_reservas: "Reservas", reservas_h2: "Reserva tu <em>plaza.</em>",
-    reservas_lead: "El plazo de reservas se abrirá próximamente. Anunciaremos la fecha de apertura; mientras tanto, escríbenos para cualquier consulta.",
+    reservas_lead: "El plazo de reservas se abre el miércoles 22 de julio a las 15:00. Mientras tanto, escríbenos para cualquier consulta.",
+    reservas_lead_open: "El plazo de reservas está abierto. Pulsa en «Reservar plaza» para completar tu solicitud.",
     reservas_quote: "Hasta el 31 de octubre: si se ha pagado la fianza, se devuelve el 50 %; el importe completo, el 85 %. Del 1 al 18 de noviembre: la fianza no se devuelve; el importe completo, el 50 %.",
     foot_brand: "Escuela de baile en Andoain con recorrido en docencia, escena y comunidad. Baztango es nuestro encuentro anual de tango.",
     foot_evento: "Evento", foot_info: "Información", foot_contacto: "Contacto"
@@ -148,7 +149,7 @@ export const T = {
   eu: {
     htmlLang: "eu",
     nav_concepto: "Kontzeptua", nav_hotel: "Hotela", nav_programa: "Programa", nav_djs: "DJak", nav_clases: "Klaseak", nav_packs: "Paketeak", nav_extras: "Extrak", nav_reservas: "Erreserbak",
-    home_btn: "↩ Hasiera", mm_home: "↩ Hasierara itzuli", reservas_soon: "Erreserbak · Laster", scroll_cue: "Egin scroll aurrera",
+    home_btn: "↩ Hasiera", mm_home: "↩ Hasierara itzuli", reservas_soon: "Erreserbak · Laster", reservas_cta: "Erreserbatu lekua", scroll_cue: "Egin scroll aurrera",
     hero_eyebrow: "2026ko azaroak 26 – 29 · Berrioplano",
     hero_h1: "Milongak <em>egunsentira arte.</em>",
     hero_lead: "Baztango 20: milongak egunsentira arte, klaseak, DJak, elkarbizitza eta erreserbak 2026ko azaroaren 26tik 29ra, Berrioplanon, Hotel Luze El Toron, Iruñetik gertu.",
@@ -168,7 +169,8 @@ export const T = {
     eb_packs: "Paketeak eta prezioak", packs_h2: "<em>Paketeak.</em>", packs_lead: "Hotela, milongak, otorduak, klaseak eta extrak konbinatzen ditu.", pack_feat: "Estado Puro + Hotela · 165 € + 252 € hotela", pack_incl: "Sartutako jarduerak:",
     eb_extras: "Extrak", extras_h2: "Jarduera <em>solteak.</em>",
     eb_reservas: "Erreserbak", reservas_h2: "Erreserbatu zure <em>lekua.</em>",
-    reservas_lead: "Erreserba epea laster zabalduko da. Zabalpen-data iragarriko dugu; bitartean, idatzi guri edozein zalantzarako.",
+    reservas_lead: "Erreserba epea uztailaren 22an, asteazkenean, 15:00etan zabalduko da. Bitartean, idatzi guri edozein zalantzarako.",
+    reservas_lead_open: "Erreserba epea zabalik dago. Sakatu «Erreserbatu lekua» zure eskaera osatzeko.",
     reservas_quote: "Urriaren 31ra arte: seinalea ordainduta badago, %50 itzuliko da; zenbateko osoa ordainduta, %85. Azaroaren 1etik 18ra: seinalea ez da itzuliko; zenbateko osoa ordainduta, %50.",
     foot_brand: "Andoaingo dantza-eskola, irakaskuntzan, eszenan eta komunitatean ibilbidea duena. Baztango gure urteroko tango topaketa da.",
     foot_evento: "Ekitaldia", foot_info: "Informazioa", foot_contacto: "Harremana"
@@ -176,7 +178,7 @@ export const T = {
   en: {
     htmlLang: "en",
     nav_concepto: "Concept", nav_hotel: "Hotel", nav_programa: "Programme", nav_djs: "DJs", nav_clases: "Classes", nav_packs: "Packages", nav_extras: "Extras", nav_reservas: "Bookings",
-    home_btn: "↩ Home", mm_home: "↩ Back to home", reservas_soon: "Bookings · Coming soon", scroll_cue: "Scroll to advance",
+    home_btn: "↩ Home", mm_home: "↩ Back to home", reservas_soon: "Bookings · Coming soon", reservas_cta: "Book your place", scroll_cue: "Scroll to advance",
     hero_eyebrow: "26 – 29 November 2026 · Berrioplano",
     hero_h1: "Milongas until <em>dawn.</em>",
     hero_lead: "Baztango 20 brings together late-night milongas, classes, DJs, community and bookings from 26 to 29 November 2026 in Berrioplano, Hotel Luze El Toro, near Pamplona.",
@@ -196,7 +198,8 @@ export const T = {
     eb_packs: "Packages and prices", packs_h2: "<em>Packages.</em>", packs_lead: "Combinations of hotel, milongas, meals, classes and extras.", pack_feat: "Estado Puro + Hotel · 165 € + 252 € hotel", pack_incl: "Included activities:",
     eb_extras: "Extras", extras_h2: "Individual <em>activities.</em>",
     eb_reservas: "Bookings", reservas_h2: "Book your <em>place.</em>",
-    reservas_lead: "Bookings will open soon. We will announce the opening date; in the meantime, write to us with any questions.",
+    reservas_lead: "Bookings open on Wednesday 22 July at 15:00 (CEST). In the meantime, write to us with any questions.",
+    reservas_lead_open: "Bookings are open. Click “Book your place” to complete your request.",
     reservas_quote: "Until 31 October: if the deposit has been paid, 50 % is refunded; the full amount, 85 %. From 1 to 18 November: the deposit is not refunded; the full amount, 50 %.",
     foot_brand: "A dance school in Andoain with a long path in teaching, stage and community. Baztango is our annual tango gathering.",
     foot_evento: "Event", foot_info: "Information", foot_contacto: "Contact"
@@ -204,7 +207,7 @@ export const T = {
   fr: {
     htmlLang: "fr",
     nav_concepto: "Concept", nav_hotel: "Hôtel", nav_programa: "Programme", nav_djs: "DJs", nav_clases: "Cours", nav_packs: "Forfaits", nav_extras: "Extras", nav_reservas: "Réservations",
-    home_btn: "↩ Accueil", mm_home: "↩ Retour à l'accueil", reservas_soon: "Réservations · Bientôt", scroll_cue: "Défile pour avancer",
+    home_btn: "↩ Accueil", mm_home: "↩ Retour à l'accueil", reservas_soon: "Réservations · Bientôt", reservas_cta: "Réserver ta place", scroll_cue: "Défile pour avancer",
     hero_eyebrow: "26 – 29 novembre 2026 · Berrioplano",
     hero_h1: "Milongas <em>jusqu'à l'aube.</em>",
     hero_lead: "Baztango 20 réunit milongas jusqu'à l'aube, cours, DJs, convivialité et réservations du 26 au 29 novembre 2026 à Berrioplano, Hôtel Luze El Toro, près de Pampelune.",
@@ -224,7 +227,8 @@ export const T = {
     eb_packs: "Forfaits et tarifs", packs_h2: "<em>Forfaits.</em>", packs_lead: "Combinaisons d'hôtel, milongas, repas, cours et extras.", pack_feat: "Estado Puro + Hôtel · 165 € + 252 € hôtel", pack_incl: "Activités incluses :",
     eb_extras: "Extras", extras_h2: "Activités <em>à l'unité.</em>",
     eb_reservas: "Réservations", reservas_h2: "Réserve ta <em>place.</em>",
-    reservas_lead: "Les réservations ouvriront prochainement. Nous annoncerons la date d'ouverture ; en attendant, écris-nous pour toute question.",
+    reservas_lead: "Les réservations ouvrent le mercredi 22 juillet à 15 h 00. En attendant, écris-nous pour toute question.",
+    reservas_lead_open: "Les réservations sont ouvertes. Clique sur « Réserver ta place » pour compléter ta demande.",
     reservas_quote: "Jusqu'au 31 octobre : si l'acompte a été versé, 50 % est remboursé ; le montant total, 85 %. Du 1er au 18 novembre : l'acompte n'est pas remboursé ; le montant total, 50 %.",
     foot_brand: "Une école de danse à Andoain avec un long parcours dans l'enseignement, la scène et la communauté. Baztango est notre rencontre annuelle de tango.",
     foot_evento: "Événement", foot_info: "Information", foot_contacto: "Contact"
@@ -232,7 +236,7 @@ export const T = {
   de: {
     htmlLang: "de",
     nav_concepto: "Konzept", nav_hotel: "Hotel", nav_programa: "Programm", nav_djs: "DJs", nav_clases: "Kurse", nav_packs: "Pakete", nav_extras: "Extras", nav_reservas: "Buchungen",
-    home_btn: "↩ Start", mm_home: "↩ Zurück zur Startseite", reservas_soon: "Buchungen · In Kürze", scroll_cue: "Zum Weiter scrollen",
+    home_btn: "↩ Start", mm_home: "↩ Zurück zur Startseite", reservas_soon: "Buchungen · In Kürze", reservas_cta: "Platz reservieren", scroll_cue: "Zum Weiter scrollen",
     hero_eyebrow: "26. – 29. November 2026 · Berrioplano",
     hero_h1: "Milongas bis zum <em>Morgengrauen.</em>",
     hero_lead: "Baztango 20 vereint Milongas bis zum Morgengrauen, Kurse, DJs, Gemeinschaft und Buchungen vom 26. bis 29. November 2026 in Berrioplano, Hotel Luze El Toro, bei Pamplona.",
@@ -252,7 +256,8 @@ export const T = {
     eb_packs: "Pakete und Preise", packs_h2: "<em>Pakete.</em>", packs_lead: "Kombinationen aus Hotel, Milongas, Mahlzeiten, Kursen und Extras.", pack_feat: "Estado Puro + Hotel · 165 € + 252 € Hotel", pack_incl: "Enthaltene Aktivitäten:",
     eb_extras: "Extras", extras_h2: "<em>Einzelaktivitäten.</em>",
     eb_reservas: "Buchungen", reservas_h2: "Reserviere deinen <em>Platz.</em>",
-    reservas_lead: "Die Buchungen öffnen in Kürze. Wir geben das Eröffnungsdatum bekannt; schreib uns in der Zwischenzeit bei Fragen.",
+    reservas_lead: "Die Buchungen öffnen am Mittwoch, 22. Juli, um 15:00 Uhr. Schreib uns in der Zwischenzeit bei Fragen.",
+    reservas_lead_open: "Die Buchungen sind geöffnet. Klicke auf „Platz reservieren“, um deine Anfrage abzuschließen.",
     reservas_quote: "Bis zum 31. Oktober: Wurde die Anzahlung bezahlt, werden 50 % erstattet; der Gesamtbetrag, 85 %. Vom 1. bis 18. November: keine Erstattung der Anzahlung; der Gesamtbetrag, 50 %.",
     foot_brand: "Eine Tanzschule in Andoain mit langem Weg in Lehre, Bühne und Gemeinschaft. Baztango ist unser jährliches Tango-Treffen.",
     foot_evento: "Event", foot_info: "Information", foot_contacto: "Kontakt"

@@ -9,8 +9,8 @@
 //    prefetch anticipado de los tramos vecinos (arranque sin stutter).
 //  - Fallback apilado (scroll normal) en móvil / prefers-reduced-motion.
 // ============================================================================
-import { media, tuning, sections, mediaMobile, tuningMobile } from "./config.js?v=10";
-import { LANGS, LANG_LABEL, T, getPackDetails, getProgram, getExtras } from "./i18n.js?v=3";
+import { media, tuning, sections, mediaMobile, tuningMobile, reservas } from "./config.js?v=11";
+import { LANGS, LANG_LABEL, T, getPackDetails, getProgram, getExtras } from "./i18n.js?v=4";
 
 /* ---------- utilidades ---------- */
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -722,7 +722,7 @@ function applyLang(lang) {
   // cabecera + menú móvil
   document.querySelectorAll(".home-btn").forEach((el) => (el.textContent = t.home_btn));
   document.querySelectorAll(".mm-home").forEach((el) => (el.textContent = t.mm_home));
-  document.querySelectorAll(".cta-pill, .mm-disabled, .btn.is-disabled").forEach((el) => (el.textContent = t.reservas_soon));
+  document.querySelectorAll("[data-reserva-cta]").forEach((el) => (el.textContent = reservasOpen() ? t.reservas_cta : t.reservas_soon));
   const navKey = { concepto: "nav_concepto", alojamiento: "nav_hotel", programa: "nav_programa", djs: "nav_djs", clases: "nav_clases", packs: "nav_packs", extras: "nav_extras", reservas: "nav_reservas" };
   document.querySelectorAll("[data-nav]").forEach((a) => { const k = navKey[a.getAttribute("data-nav")]; if (k) a.textContent = t[k]; });
   setText(".scroll-cue span", t.scroll_cue);
@@ -783,7 +783,7 @@ function applyLang(lang) {
   setText(`${cap("reservas")} .eyebrow`, t.eb_reservas);
   setHtml(`${cap("reservas")} h2`, t.reservas_h2);
   const rl = document.querySelectorAll(`${cap("reservas")} .lead`);
-  if (rl[0]) rl[0].textContent = t.reservas_lead;
+  if (rl[0]) rl[0].textContent = reservasOpen() ? t.reservas_lead_open : t.reservas_lead;
   setText(`${cap("reservas")} .quote`, t.reservas_quote);
 
   // footer
@@ -805,6 +805,40 @@ function initI18n() {
   applyLang(LANGS.includes(saved) ? saved : "es");
 }
 
+/* ============================================================================
+   RESERVAS · apertura programada (reservas.opensAtUtcMs en config.js)
+   Antes de la hora: placeholders "Próximamente" deshabilitados. Al llegar la
+   hora (incluso con la página ya abierta), cada placeholder se convierte en un
+   enlace al formulario. target="_top" porque la landing corre en un iframe.
+   ========================================================================== */
+function reservasOpen() { return Date.now() >= reservas.opensAtUtcMs; }
+
+function activateReservas() {
+  document.querySelectorAll("[data-reserva-cta]").forEach((el) => {
+    if (el.tagName === "A") return; // ya activado (idempotente)
+    const a = document.createElement("a");
+    a.setAttribute("data-reserva-cta", "");
+    a.href = reservas.url;
+    a.target = "_top";
+    if (el.classList.contains("cta-pill")) a.className = "cta-pill";
+    else if (el.classList.contains("mm-disabled")) a.className = "mm-cta";
+    else if (el.classList.contains("foot-disabled")) a.className = "";
+    else a.className = "btn btn-primary";
+    a.textContent = (T[currentLang] || T.es).reservas_cta;
+    el.replaceWith(a);
+  });
+  const rl = document.querySelector('[data-cap="reservas"] .lead');
+  if (rl) rl.textContent = (T[currentLang] || T.es).reservas_lead_open;
+}
+
+function initReservasGate() {
+  if (reservasOpen()) { activateReservas(); return; }
+  // setTimeout se congela en pestañas en 2º plano: visibilitychange lo cubre.
+  const delay = Math.min(reservas.opensAtUtcMs - Date.now() + 500, 0x7fffffff);
+  setTimeout(() => { if (reservasOpen()) activateReservas(); }, delay);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && reservasOpen()) activateReservas(); });
+}
+
 /* ---------- arranque ---------- */
 // En móvil, fusionamos el set ligero ANTES de crear la caché y arrancar.
 if (mobileCanvas) {
@@ -816,3 +850,4 @@ else initPresentation();
 initPackModal();
 initVideo();
 initI18n();
+initReservasGate();

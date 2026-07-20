@@ -26,6 +26,18 @@
 // los fotogramas: crear tag nuevo (frames-v2) y actualizar esta constante.
 const FRAMES_CDN = "https://cdn.jsdelivr.net/gh/joteiza003/baztango-landing@frames-v1/";
 
+// ----------------------------------------------------------------------------
+// APERTURA DE RESERVAS · los CTA "Reservas · Próximamente" se convierten en
+// enlaces al formulario cuando el reloj del visitante pasa este instante.
+// Se fija en UTC para que la apertura sea simultánea en todo el mundo:
+// 15:00 del 22-07-2026 en España peninsular (CEST, UTC+2) = 13:00 UTC.
+// El gate vive en cinematic.js (initReservasGate).
+// ----------------------------------------------------------------------------
+export const reservas = {
+  opensAtUtcMs: Date.UTC(2026, 6, 22, 13, 0, 0),
+  url: "https://www.joseba-bakartxo.com/baztango/reserva"
+};
+
 export const media = {
   framePath: FRAMES_CDN + "assets/frames/f",
   framePad: 4,
