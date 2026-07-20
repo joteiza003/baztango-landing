@@ -784,6 +784,7 @@ function applyLang(lang) {
   setHtml(`${cap("reservas")} h2`, t.reservas_h2);
   const rl = document.querySelectorAll(`${cap("reservas")} .lead`);
   if (rl[0]) rl[0].textContent = reservasOpen() ? t.reservas_lead_open : t.reservas_lead;
+  document.querySelectorAll("#reservasCountdown [data-cd-label]").forEach((el) => { const v = t["cd_" + el.getAttribute("data-cd-label")]; if (v) el.textContent = v; });
   setText(`${cap("reservas")} .quote`, t.reservas_quote);
 
   // footer
@@ -813,7 +814,20 @@ function initI18n() {
    ========================================================================== */
 function reservasOpen() { return Date.now() >= reservas.opensAtUtcMs; }
 
+function renderReservasCountdown() {
+  const cd = document.getElementById("reservasCountdown");
+  if (!cd) return;
+  let s = Math.max(0, Math.floor((reservas.opensAtUtcMs - Date.now()) / 1000));
+  const v = { d: Math.floor(s / 86400), h: Math.floor((s % 86400) / 3600), m: Math.floor((s % 3600) / 60), s: s % 60 };
+  for (const k of ["d", "h", "m", "s"]) {
+    const el = cd.querySelector(`[data-cd-${k}]`);
+    if (el) el.textContent = String(v[k]).padStart(2, "0");
+  }
+}
+
 function activateReservas() {
+  const cd = document.getElementById("reservasCountdown");
+  if (cd) cd.remove();
   document.querySelectorAll("[data-reserva-cta]").forEach((el) => {
     if (el.tagName === "A") return; // ya activado (idempotente)
     const a = document.createElement("a");
@@ -833,10 +847,16 @@ function activateReservas() {
 
 function initReservasGate() {
   if (reservasOpen()) { activateReservas(); return; }
-  // setTimeout se congela en pestañas en 2º plano: visibilitychange lo cubre.
-  const delay = Math.min(reservas.opensAtUtcMs - Date.now() + 500, 0x7fffffff);
-  setTimeout(() => { if (reservasOpen()) activateReservas(); }, delay);
-  document.addEventListener("visibilitychange", () => { if (!document.hidden && reservasOpen()) activateReservas(); });
+  const cd = document.getElementById("reservasCountdown");
+  if (cd) cd.hidden = false;
+  renderReservasCountdown();
+  // El intervalo actualiza la cuenta atrás y dispara la activación al llegar
+  // a cero; en 2º plano los timers se estrangulan → visibilitychange lo cubre.
+  const iv = setInterval(() => {
+    renderReservasCountdown();
+    if (reservasOpen()) { clearInterval(iv); activateReservas(); }
+  }, 1000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && reservasOpen()) { clearInterval(iv); activateReservas(); } });
 }
 
 /* ---------- arranque ---------- */

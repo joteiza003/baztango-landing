@@ -142,6 +142,7 @@ export const T = {
     eb_reservas: "Reservas", reservas_h2: "Reserva tu <em>plaza.</em>",
     reservas_lead: "El plazo de reservas se abre el miércoles 22 de julio a las 15:00. Mientras tanto, escríbenos para cualquier consulta.",
     reservas_lead_open: "El plazo de reservas está abierto. Pulsa en «Reservar plaza» para completar tu solicitud.",
+    cd_d: "Días", cd_h: "Horas", cd_m: "Min", cd_s: "Seg",
     reservas_quote: "Hasta el 31 de octubre: si se ha pagado la fianza, se devuelve el 50 %; el importe completo, el 85 %. Del 1 al 18 de noviembre: la fianza no se devuelve; el importe completo, el 50 %.",
     foot_brand: "Escuela de baile en Andoain con recorrido en docencia, escena y comunidad. Baztango es nuestro encuentro anual de tango.",
     foot_evento: "Evento", foot_info: "Información", foot_contacto: "Contacto"
@@ -171,6 +172,7 @@ export const T = {
     eb_reservas: "Erreserbak", reservas_h2: "Erreserbatu zure <em>lekua.</em>",
     reservas_lead: "Erreserba epea uztailaren 22an, asteazkenean, 15:00etan zabalduko da. Bitartean, idatzi guri edozein zalantzarako.",
     reservas_lead_open: "Erreserba epea zabalik dago. Sakatu «Erreserbatu lekua» zure eskaera osatzeko.",
+    cd_d: "Egun", cd_h: "Ordu", cd_m: "Min", cd_s: "Seg",
     reservas_quote: "Urriaren 31ra arte: seinalea ordainduta badago, %50 itzuliko da; zenbateko osoa ordainduta, %85. Azaroaren 1etik 18ra: seinalea ez da itzuliko; zenbateko osoa ordainduta, %50.",
     foot_brand: "Andoaingo dantza-eskola, irakaskuntzan, eszenan eta komunitatean ibilbidea duena. Baztango gure urteroko tango topaketa da.",
     foot_evento: "Ekitaldia", foot_info: "Informazioa", foot_contacto: "Harremana"
@@ -200,6 +202,7 @@ export const T = {
     eb_reservas: "Bookings", reservas_h2: "Book your <em>place.</em>",
     reservas_lead: "Bookings open on Wednesday 22 July at 15:00 (CEST). In the meantime, write to us with any questions.",
     reservas_lead_open: "Bookings are open. Click “Book your place” to complete your request.",
+    cd_d: "Days", cd_h: "Hours", cd_m: "Min", cd_s: "Sec",
     reservas_quote: "Until 31 October: if the deposit has been paid, 50 % is refunded; the full amount, 85 %. From 1 to 18 November: the deposit is not refunded; the full amount, 50 %.",
     foot_brand: "A dance school in Andoain with a long path in teaching, stage and community. Baztango is our annual tango gathering.",
     foot_evento: "Event", foot_info: "Information", foot_contacto: "Contact"
@@ -229,6 +232,7 @@ export const T = {
     eb_reservas: "Réservations", reservas_h2: "Réserve ta <em>place.</em>",
     reservas_lead: "Les réservations ouvrent le mercredi 22 juillet à 15 h 00. En attendant, écris-nous pour toute question.",
     reservas_lead_open: "Les réservations sont ouvertes. Clique sur « Réserver ta place » pour compléter ta demande.",
+    cd_d: "Jours", cd_h: "Heures", cd_m: "Min", cd_s: "Sec",
     reservas_quote: "Jusqu'au 31 octobre : si l'acompte a été versé, 50 % est remboursé ; le montant total, 85 %. Du 1er au 18 novembre : l'acompte n'est pas remboursé ; le montant total, 50 %.",
     foot_brand: "Une école de danse à Andoain avec un long parcours dans l'enseignement, la scène et la communauté. Baztango est notre rencontre annuelle de tango.",
     foot_evento: "Événement", foot_info: "Information", foot_contacto: "Contact"
@@ -258,6 +262,7 @@ export const T = {
     eb_reservas: "Buchungen", reservas_h2: "Reserviere deinen <em>Platz.</em>",
     reservas_lead: "Die Buchungen öffnen am Mittwoch, 22. Juli, um 15:00 Uhr. Schreib uns in der Zwischenzeit bei Fragen.",
     reservas_lead_open: "Die Buchungen sind geöffnet. Klicke auf „Platz reservieren“, um deine Anfrage abzuschließen.",
+    cd_d: "Tage", cd_h: "Std.", cd_m: "Min.", cd_s: "Sek.",
     reservas_quote: "Bis zum 31. Oktober: Wurde die Anzahlung bezahlt, werden 50 % erstattet; der Gesamtbetrag, 85 %. Vom 1. bis 18. November: keine Erstattung der Anzahlung; der Gesamtbetrag, 50 %.",
     foot_brand: "Eine Tanzschule in Andoain mit langem Weg in Lehre, Bühne und Gemeinschaft. Baztango ist unser jährliches Tango-Treffen.",
     foot_evento: "Event", foot_info: "Information", foot_contacto: "Kontakt"
