@@ -366,6 +366,11 @@ function initPresentation() {
   let animRafId = 0;
   let animWatchdog = 0;
   let captionFrom = 0;
+  // Fundido del canvas para saltos largos (no adyacentes): se apaga, se
+  // teletransporta al tramo vecino del destino y se enciende animando solo ese tramo.
+  const FADE_MS = 260;
+  let canvasFade = 1;
+  function setCanvasFade(v) { canvasFade = clamp(v); canvas.style.opacity = canvasFade.toFixed(3); }
 
   function sectionFromFrame(frameIdx) {
     let best = 0;
@@ -411,6 +416,7 @@ function initPresentation() {
     captionFrom = target;
     cache.setKeep(curRound);
     releaseNavLocks();
+    setCanvasFade(1);
     drawIndex(curRound, true);
     setIdle(target);
     idlePrefetch();
@@ -431,11 +437,17 @@ function initPresentation() {
     }
 
     const fromSection = wasAnimating ? sectionFromFrame(curRound) : current;
-    const a = wasAnimating ? curRound : idx[fromSection];
+    // SALTO LARGO (sección no adyacente, p.ej. desde el menú): en vez de
+    // atravesar todos los frames, fundido a oscuro + teletransporte al frame
+    // clave de la sección VECINA al destino (la previa si bajamos, la posterior
+    // si subimos) y se anima solo ese último tramo.
+    const far = Math.abs(target - fromSection) > 1;
+    const startSection = far ? target - (target > fromSection ? 1 : -1) : fromSection;
+    const a = far ? idx[startSection] : wasAnimating ? curRound : idx[fromSection];
     const b = idx[target];
     const dir = b >= a ? 1 : -1;
-    const D = wasAnimating ? durationMsFromFrames(a, target) : durationMs(fromSection, target);
-    const t0 = performance.now();
+    const D = far ? durationMs(startSection, target)
+      : wasAnimating ? durationMsFromFrames(a, target) : durationMs(fromSection, target);
 
     animating = true;
     captionFrom = fromSection;
@@ -444,30 +456,55 @@ function initPresentation() {
 
     animWatchdog = setTimeout(() => {
       if (animating) finishTransition(target, fromSection);
-    }, D + 900);
+    }, (far ? FADE_MS : 0) + D + 900);
 
-    function step(now) {
-      if (!animating) return;
-      const t = clamp((now - t0) / D);
-      const e = easeInOutSine(t);
-      curRound = clampIdx(Math.round(lerp(a, b, e)));
-      cache.setKeep(curRound);
-      cache.load(curRound);
-      for (let k = 1; k <= tuning.prefetchBurst; k += 1) cache.load(curRound + dir * k);
-      drawIndex(curRound, true);
+    function runFrames() {
+      const t0 = performance.now();
+      const fadeStart = canvasFade;
+      function step(now) {
+        if (!animating) return;
+        const t = clamp((now - t0) / D);
+        const e = easeInOutSine(t);
+        curRound = clampIdx(Math.round(lerp(a, b, e)));
+        cache.setKeep(curRound);
+        cache.load(curRound);
+        for (let k = 1; k <= tuning.prefetchBurst; k += 1) cache.load(curRound + dir * k);
+        drawIndex(curRound, true);
+        if (fadeStart < 1) setCanvasFade(fadeStart + (1 - fadeStart) * clamp((now - t0) / FADE_MS));
 
-      // crossfade de texto: sale en la 1ª mitad, entra en la 2ª (el vídeo respira)
-      showCaption(captionFrom, 1 - smoothstep(t / 0.42));
-      showCaption(target, smoothstep((t - 0.5) / 0.5));
-      if (progressEl) progressEl.style.width = ((fromSection + (target - fromSection) * e) / (sections.length - 1) * 100) + "%";
+        // crossfade de texto: sale en la 1ª mitad, entra en la 2ª (el vídeo respira)
+        showCaption(captionFrom, 1 - smoothstep(t / 0.42));
+        showCaption(target, smoothstep((t - 0.5) / 0.5));
+        if (progressEl) progressEl.style.width = ((fromSection + (target - fromSection) * e) / (sections.length - 1) * 100) + "%";
 
-      if (t < 1) {
-        animRafId = requestAnimationFrame(step);
-      } else {
-        finishTransition(target, fromSection);
+        if (t < 1) {
+          animRafId = requestAnimationFrame(step);
+        } else {
+          finishTransition(target, fromSection);
+        }
       }
+      animRafId = requestAnimationFrame(step);
     }
-    animRafId = requestAnimationFrame(step);
+
+    if (!far) { runFrames(); return; }
+
+    // Fase de fundido: apaga canvas y texto de origen, luego salta y anima.
+    const f0 = performance.now();
+    const fadeFrom = canvasFade;
+    function fadeStep(now) {
+      if (!animating) return;
+      const ft = clamp((now - f0) / FADE_MS);
+      setCanvasFade(fadeFrom * (1 - ft));
+      showCaption(captionFrom, 1 - ft);
+      if (ft < 1) { animRafId = requestAnimationFrame(fadeStep); return; }
+      curRound = a;            // teletransporte al tramo vecino del destino
+      cache.setKeep(a);
+      drawIndex(a, true);
+      showCaption(captionFrom, 0);
+      captionFrom = target;    // que step() no resucite el texto de origen
+      runFrames();
+    }
+    animRafId = requestAnimationFrame(fadeStep);
   }
 
   function recoverPresentationState() {
