@@ -75,7 +75,7 @@ img{display:block;max-width:100%}
 .lang-portada{position:fixed;top:5rem;left:50%;transform:translateX(-50%);z-index:46;display:none;gap:.15rem;padding:.3rem .45rem;border:1px solid var(--line);border-radius:999px;background:rgba(5,6,10,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity .5s var(--ease)}
 .mode-presentation .lang-portada{display:inline-flex}
 .lang-portada button{font-size:.78rem;padding:.45rem .62rem}
-.mobile-menu .lang-switch{margin-top:1.2rem;gap:.45rem}
+.mobile-menu .lang-switch{margin-bottom:.4rem;gap:.45rem}
 .mobile-menu .lang-switch button{font-size:.95rem;padding:.45rem .7rem;border:1px solid var(--line);border-radius:999px}
 
 /* ---------- STAGE / CANVAS ---------- */
