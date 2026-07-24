@@ -67,11 +67,11 @@ const PACK_COMP = {
   uab: { dom: ["txakoli", "comida", "atardecer"] }
 };
 const EP_META = {
-  es: ["Pack Estado Puro · 165 €", "Hotel · 252 €", "Total · 417 €"],
-  eu: ["Estado Puro paketea · 165 €", "Hotela · 252 €", "Guztira · 417 €"],
-  en: ["Estado Puro package · 165 €", "Hotel · 252 €", "Total · 417 €"],
-  fr: ["Forfait Estado Puro · 165 €", "Hôtel · 252 €", "Total · 417 €"],
-  de: ["Paket Estado Puro · 165 €", "Hotel · 252 €", "Gesamt · 417 €"]
+  es: ["Pack Estado Puro · 165 €", "Hotel · 252 €", "Total · 417 €", "Pensión completa: desde la cena del jueves hasta las comidas del domingo."],
+  eu: ["Estado Puro paketea · 165 €", "Hotela · 252 €", "Guztira · 417 €", "Pentsio osoa: osteguneko afaritik igandeko bazkarietaraino."],
+  en: ["Estado Puro package · 165 €", "Hotel · 252 €", "Total · 417 €", "Full board: from Thursday dinner to Sunday meals."],
+  fr: ["Forfait Estado Puro · 165 €", "Hôtel · 252 €", "Total · 417 €", "Pension complète : du dîner du jeudi aux repas du dimanche."],
+  de: ["Paket Estado Puro · 165 €", "Hotel · 252 €", "Gesamt · 417 €", "Vollpension: vom Abendessen am Donnerstag bis zu den Mahlzeiten am Sonntag."]
 };
 
 // Construye el detalle de packs (para el modal) en el idioma dado
@@ -137,7 +137,7 @@ export const T = {
     eb_djs: "Equipo artístico", djs_h2: "DJs de Baztango <em>20.</em>", djs_lead: "Cuatro DJs para las milongas hasta el amanecer.", role_teacher: "Profesora",
     eb_clases: "Clases", clases_h2: "<em>Clases.</em>", clases_lead: "Dos clases con Bakartxo Arabaolaza, abiertas a ambos roles.", clases_a: "Viernes · 12:45 – 14:00 · Técnica de giro · ambos roles", clases_b: "Sábado · 12:45 – 14:00 · Sacadas · ambos roles",
     programa_h2: "Cuatro días de <em>tango.</em>",
-    eb_packs: "Packs y tarifas", packs_h2: "<em>Packs.</em>", packs_lead: "Combinaciones de hotel, milongas, comidas, clases y extras.", pack_feat: "Estado Puro + Hotel · 165 € + 252 € hotel", pack_incl: "Actividades incluidas:",
+    eb_packs: "Packs y tarifas", packs_h2: "<em>Packs.</em>", packs_lead: "Combinaciones de hotel, milongas, comidas, clases y extras.", pack_feat: "Estado Puro + Hotel (pensión completa) · 165 € + 252 € hotel", pack_incl: "Actividades incluidas:",
     eb_extras: "Extras", extras_h2: "Actividades <em>sueltas.</em>",
     eb_reservas: "Reservas", reservas_h2: "Reserva tu <em>plaza.</em>",
     reservas_lead: "El plazo de reservas se abre el miércoles 22 de julio a las 15:00. Mientras tanto, escríbenos para cualquier consulta.",
@@ -167,7 +167,7 @@ export const T = {
     eb_djs: "Talde artistikoa", djs_h2: "Baztango 20ko <em>DJak.</em>", djs_lead: "Lau DJ egunsentira arteko milongetarako.", role_teacher: "Irakaslea",
     eb_clases: "Klaseak", clases_h2: "<em>Klaseak.</em>", clases_lead: "Bi klase Bakartxo Arabaolazarekin, bi rolentzat irekiak.", clases_a: "Ostirala · 12:45 – 14:00 · Biraketa teknika · bi rolak", clases_b: "Larunbata · 12:45 – 14:00 · Sacadak · bi rolak",
     programa_h2: "Lau tango <em>egun.</em>",
-    eb_packs: "Paketeak eta prezioak", packs_h2: "<em>Paketeak.</em>", packs_lead: "Hotela, milongak, otorduak, klaseak eta extrak konbinatzen ditu.", pack_feat: "Estado Puro + Hotela · 165 € + 252 € hotela", pack_incl: "Sartutako jarduerak:",
+    eb_packs: "Paketeak eta prezioak", packs_h2: "<em>Paketeak.</em>", packs_lead: "Hotela, milongak, otorduak, klaseak eta extrak konbinatzen ditu.", pack_feat: "Estado Puro + Hotela (pentsio osoa) · 165 € + 252 € hotela", pack_incl: "Sartutako jarduerak:",
     eb_extras: "Extrak", extras_h2: "Jarduera <em>solteak.</em>",
     eb_reservas: "Erreserbak", reservas_h2: "Erreserbatu zure <em>lekua.</em>",
     reservas_lead: "Erreserba epea uztailaren 22an, asteazkenean, 15:00etan zabalduko da. Bitartean, idatzi guri edozein zalantzarako.",
@@ -197,7 +197,7 @@ export const T = {
     eb_djs: "Artistic team", djs_h2: "Baztango 20 <em>DJs.</em>", djs_lead: "Four DJs for the milongas until dawn.", role_teacher: "Teacher",
     eb_clases: "Classes", clases_h2: "<em>Classes.</em>", clases_lead: "Two classes with Bakartxo Arabaolaza, open to both roles.", clases_a: "Friday · 12:45 – 14:00 · Turn technique · both roles", clases_b: "Saturday · 12:45 – 14:00 · Sacadas · both roles",
     programa_h2: "Four days of <em>tango.</em>",
-    eb_packs: "Packages and prices", packs_h2: "<em>Packages.</em>", packs_lead: "Combinations of hotel, milongas, meals, classes and extras.", pack_feat: "Estado Puro + Hotel · 165 € + 252 € hotel", pack_incl: "Included activities:",
+    eb_packs: "Packages and prices", packs_h2: "<em>Packages.</em>", packs_lead: "Combinations of hotel, milongas, meals, classes and extras.", pack_feat: "Estado Puro + Hotel (full board) · 165 € + 252 € hotel", pack_incl: "Included activities:",
     eb_extras: "Extras", extras_h2: "Individual <em>activities.</em>",
     eb_reservas: "Bookings", reservas_h2: "Book your <em>place.</em>",
     reservas_lead: "Bookings open on Wednesday 22 July at 15:00 (CEST). In the meantime, write to us with any questions.",
@@ -227,7 +227,7 @@ export const T = {
     eb_djs: "Équipe artistique", djs_h2: "Les <em>DJs de Baztango 20.</em>", djs_lead: "Quatre DJs pour les milongas jusqu'à l'aube.", role_teacher: "Professeure",
     eb_clases: "Cours", clases_h2: "<em>Cours.</em>", clases_lead: "Deux cours avec Bakartxo Arabaolaza, ouverts aux deux rôles.", clases_a: "Vendredi · 12:45 – 14:00 · Technique de giro · les deux rôles", clases_b: "Samedi · 12:45 – 14:00 · Sacadas · les deux rôles",
     programa_h2: "Quatre jours de <em>tango.</em>",
-    eb_packs: "Forfaits et tarifs", packs_h2: "<em>Forfaits.</em>", packs_lead: "Combinaisons d'hôtel, milongas, repas, cours et extras.", pack_feat: "Estado Puro + Hôtel · 165 € + 252 € hôtel", pack_incl: "Activités incluses :",
+    eb_packs: "Forfaits et tarifs", packs_h2: "<em>Forfaits.</em>", packs_lead: "Combinaisons d'hôtel, milongas, repas, cours et extras.", pack_feat: "Estado Puro + Hôtel (pension complète) · 165 € + 252 € hôtel", pack_incl: "Activités incluses :",
     eb_extras: "Extras", extras_h2: "Activités <em>à l'unité.</em>",
     eb_reservas: "Réservations", reservas_h2: "Réserve ta <em>place.</em>",
     reservas_lead: "Les réservations ouvrent le mercredi 22 juillet à 15 h 00. En attendant, écris-nous pour toute question.",
@@ -257,7 +257,7 @@ export const T = {
     eb_djs: "Künstlerisches Team", djs_h2: "Die <em>DJs von Baztango 20.</em>", djs_lead: "Vier DJs für die Milongas bis zum Morgengrauen.", role_teacher: "Lehrerin",
     eb_clases: "Kurse", clases_h2: "<em>Kurse.</em>", clases_lead: "Zwei Kurse mit Bakartxo Arabaolaza, offen für beide Rollen.", clases_a: "Freitag · 12:45 – 14:00 · Drehtechnik · beide Rollen", clases_b: "Samstag · 12:45 – 14:00 · Sacadas · beide Rollen",
     programa_h2: "Vier Tage <em>Tango.</em>",
-    eb_packs: "Pakete und Preise", packs_h2: "<em>Pakete.</em>", packs_lead: "Kombinationen aus Hotel, Milongas, Mahlzeiten, Kursen und Extras.", pack_feat: "Estado Puro + Hotel · 165 € + 252 € Hotel", pack_incl: "Enthaltene Aktivitäten:",
+    eb_packs: "Pakete und Preise", packs_h2: "<em>Pakete.</em>", packs_lead: "Kombinationen aus Hotel, Milongas, Mahlzeiten, Kursen und Extras.", pack_feat: "Estado Puro + Hotel (Vollpension) · 165 € + 252 € Hotel", pack_incl: "Enthaltene Aktivitäten:",
     eb_extras: "Extras", extras_h2: "<em>Einzelaktivitäten.</em>",
     eb_reservas: "Buchungen", reservas_h2: "Reserviere deinen <em>Platz.</em>",
     reservas_lead: "Die Buchungen öffnen am Mittwoch, 22. Juli, um 15:00 Uhr. Schreib uns in der Zwischenzeit bei Fragen.",

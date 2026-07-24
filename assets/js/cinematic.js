@@ -10,7 +10,7 @@
 //  - Fallback apilado (scroll normal) en móvil / prefers-reduced-motion.
 // ============================================================================
 import { media, tuning, sections, mediaMobile, tuningMobile, reservas } from "./config.js?v=11";
-import { LANGS, LANG_LABEL, T, getPackDetails, getProgram, getExtras } from "./i18n.js?v=4";
+import { LANGS, LANG_LABEL, T, getPackDetails, getProgram, getExtras } from "./i18n.js?v=5";
 
 /* ---------- utilidades ---------- */
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
