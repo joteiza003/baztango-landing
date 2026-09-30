@@ -702,7 +702,12 @@ function initVideo() {
 
   // PC: sustituye la miniatura por el iframe (reproducción en línea)
   if (facade) {
+    // Embebida en Wix (cadena de iframes) el reproductor en línea del hero se
+    // queda en negro en escritorio, mientras que el lightbox (el que usa el
+    // móvil) sí reproduce: dentro de un iframe usamos siempre el lightbox.
+    const isFramed = (() => { try { return window.top !== window.self; } catch (_e) { return true; } })();
     const playInline = () => {
+      if (isFramed) { openLightbox(facade.getAttribute("data-video") || FALLBACK_ID); return; }
       if (facade.classList.contains("is-playing")) return;
       const f = makeIframe(facade.getAttribute("data-video") || FALLBACK_ID);
       f.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0";
