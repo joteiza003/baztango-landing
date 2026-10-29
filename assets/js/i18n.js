@@ -93,14 +93,15 @@ export function getPackDetails(lang) {
 }
 
 // Construye programa y extras en el idioma dado (tarjetas / lista)
+// Cada fila: [horario, actividad, dj?]. El DJ solo se indica en las milongas.
 export function getProgram(lang) {
   const a = ACT[lang] || ACT.es;
   const d = DAY[lang] || DAY.es;
   return [
-    { day: d.jue, rows: [[TIME.bienvenida, a.bienvenida], [TIME.coctel, a.coctel], [TIME.amanecer, a.amanecer]] },
-    { day: d.vie, rows: [["12:45 – 14:00", a.claseA], [TIME.vespertina, a.vespertina], [TIME.amanecer, a.amanecer]] },
-    { day: d.sab, rows: [["12:45 – 14:00", a.claseB], [TIME.sidra, a.sidra], [TIME.amanecer, a.amanecer]] },
-    { day: d.dom, rows: [[TIME.txakoli, a.txakoli], [TIME.comida, a.comida], [TIME.atardecer, a.atardecer]] }
+    { day: d.jue, rows: [[TIME.bienvenida, a.bienvenida, "Gustavo Dicri"], [TIME.coctel, a.coctel], [TIME.amanecer, a.amanecer, "Joseba Pagola"]] },
+    { day: d.vie, rows: [["12:45 – 14:00", a.claseA], [TIME.vespertina, a.vespertina, "Gustavo Dicri"], [TIME.amanecer, a.amanecer, "Ignacio Cavalieri"]] },
+    { day: d.sab, rows: [["12:45 – 14:00", a.claseB], [TIME.sidra, a.sidra], [TIME.amanecer, a.amanecer, "Carlos Cabral"]] },
+    { day: d.dom, rows: [[TIME.txakoli, a.txakoli], [TIME.comida, a.comida], [TIME.atardecer, a.atardecer, "Joseba Pagola"]] }
   ];
 }
 export function getExtras(lang) {

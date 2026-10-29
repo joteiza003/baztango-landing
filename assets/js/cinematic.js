@@ -10,7 +10,7 @@
 //  - Fallback apilado (scroll normal) en móvil / prefers-reduced-motion.
 // ============================================================================
 import { media, tuning, sections, mediaMobile, tuningMobile, reservas } from "./config.js?v=11";
-import { LANGS, LANG_LABEL, T, getPackDetails, getProgram, getExtras } from "./i18n.js?v=5";
+import { LANGS, LANG_LABEL, T, getPackDetails, getProgram, getExtras } from "./i18n.js?v=6";
 
 /* ---------- utilidades ---------- */
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -814,7 +814,7 @@ function applyLang(lang) {
   setText(`${cap("programa")} .eyebrow`, t.nav_programa);
   setHtml(`${cap("programa")} h2`, t.programa_h2);
   const pg = document.querySelector(`${cap("programa")} .prog-grid`);
-  if (pg) pg.innerHTML = getProgram(lang).map((d) => `<article class="prog-card"><h3>${esc(d.day)}</h3>${d.rows.map(([ti, w]) => `<div class="prog-item"><span class="t">${esc(ti)}</span><span class="w">${esc(w)}</span></div>`).join("")}</article>`).join("");
+  if (pg) pg.innerHTML = getProgram(lang).map((d) => `<article class="prog-card"><h3>${esc(d.day)}</h3>${d.rows.map(([ti, w, dj]) => `<div class="prog-item"><span class="t">${esc(ti)}</span><span class="w">${esc(w)}</span>${dj ? `<span class="dj">DJ ${esc(dj)}</span>` : ""}</div>`).join("")}</article>`).join("");
 
   // packs
   setText(`${cap("packs")} .eyebrow`, t.eb_packs);
